@@ -24,6 +24,7 @@ import { MOCK_ARTICLES } from './mock/articles.mock'
 import { CATEGORY_GROUPS } from './mock/categories.mock'
 import { AiChatWidget } from './components/assistant/AiChatWidget'
 import { matchDatePreset } from './utils/dateUtils'
+import { matchesCategoryFilter } from './utils/categoryTranslation'
 import {
   fetchArticlesFromBackend,
   fetchServerBookmarks,
@@ -237,8 +238,7 @@ export default function App() {
 
   const filteredCount = articles.filter((article) => {
     if (isSavedViewActive && !savedArticleIds.includes(article.id)) return false
-    if (selectedCategoryId && article.categoryId !== selectedCategoryId) return false
-    if (selectedSubcategoryId && article.subcategoryId !== selectedSubcategoryId) return false
+    if (!matchesCategoryFilter(article, selectedCategoryId, selectedSubcategoryId)) return false
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase()
       const titleMatch = article.title.toLowerCase().includes(q)
@@ -261,10 +261,23 @@ export default function App() {
     const group = CATEGORY_GROUPS.find((g) => g.id === groupId)
     const sub = group?.subcategories.find((s) => s.id === subcategoryId)
 
+    const deskLabelMap: Record<string, string> = {
+      'technology': 'Technology',
+      'science': 'Science',
+      'business': 'Business',
+      'careers': 'Careers',
+      'ai-startups': 'AI & Startups',
+      'india-politics': 'India & Politics',
+      'sports': 'Sports',
+      'world': 'World',
+    }
+
+    const deskName = group?.name || deskLabelMap[groupId] || groupId
+
     if (group && sub) {
       showTemporaryNotice(`Desk: ${group.name} › ${sub.name}`)
-    } else if (group) {
-      showTemporaryNotice(`Desk: ${group.name}`)
+    } else if (deskName) {
+      showTemporaryNotice(`Desk: ${deskName}`)
     }
   }
 
@@ -472,7 +485,24 @@ export default function App() {
     )
   }
 
+  const officialDeskNames: Record<string, string> = {
+    technology: 'Technology',
+    tech: 'Technology',
+    'india-politics': 'India & Politics',
+    politics: 'India & Politics',
+    business: 'Business',
+    science: 'Science',
+    sports: 'Sports',
+    world: 'World',
+    careers: 'Careers',
+    career: 'Careers',
+    'ai-startups': 'AI & Startups',
+    ai: 'AI & Startups',
+  }
   const activeGroup = CATEGORY_GROUPS.find((g) => g.id === selectedCategoryId)
+  const activeCategoryDisplayName =
+    activeGroup?.name ||
+    (selectedCategoryId ? officialDeskNames[selectedCategoryId.toLowerCase()] || selectedCategoryId : undefined)
 
   return (
     <div className="min-h-screen bg-[#FAF7F2] text-[#141412] flex flex-col font-sans">
@@ -526,7 +556,7 @@ export default function App() {
               onClearPublishers={handleClearPublishers}
               layoutMode={layoutMode}
               onLayoutModeChange={setLayoutMode}
-              activeCategoryName={activeGroup?.name}
+              activeCategoryName={activeCategoryDisplayName}
               onClearCategory={() => {
                 setSelectedCategoryId(null)
                 setSelectedSubcategoryId(null)

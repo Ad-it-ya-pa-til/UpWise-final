@@ -83,7 +83,173 @@ export const CATEGORIES_DATA: CategoryInfo[] = [
     accentBg: '#F5F3FF',
     iconName: 'Globe',
   },
+  // Official 8 Categories
+  {
+    id: 'technology',
+    name: 'Technology',
+    slug: 'technology',
+    description: 'Hardware, silicon architecture, digital infrastructure, and consumer systems.',
+    subcategories: ['Hardware & Systems', 'Consumer Tech', 'Digital Infrastructure', 'Computing'],
+    color: '#0369A1',
+    accentBg: '#F0F9FF',
+    iconName: 'Cpu',
+  },
+  {
+    id: 'science',
+    name: 'Science',
+    slug: 'science',
+    description: 'Space exploration, astrophysics, climate science, and biological discoveries.',
+    subcategories: ['Space Exploration', 'Physics & Astronomy', 'Bio & Health Sciences', 'Scientific discoveries'],
+    color: '#7C3AED',
+    accentBg: '#F5F3FF',
+    iconName: 'FlaskConical',
+  },
+  {
+    id: 'business',
+    name: 'Business',
+    slug: 'business',
+    description: 'Markets, monetary policy, corporate developments, venture capital, and trade.',
+    subcategories: ['Business', 'Finance and markets', 'Economy', 'Corporate Strategy'],
+    color: '#047857',
+    accentBg: '#ECFDF5',
+    iconName: 'TrendingUp',
+  },
+  {
+    id: 'careers',
+    name: 'Careers',
+    slug: 'careers',
+    description: 'Workforce shifts, professional development, technical education, and employment benchmarks.',
+    subcategories: ['Workforce & Industry', 'Higher Education', 'Civil Services & Exams', 'Skill Development'],
+    color: '#B45309',
+    accentBg: '#FEF3C7',
+    iconName: 'GraduationCap',
+  },
+  {
+    id: 'ai-startups',
+    name: 'AI & Startups',
+    slug: 'ai-startups',
+    description: 'Frontier AI models, venture investments, founder briefings, and emerging tech.',
+    subcategories: ['Artificial Intelligence', 'Startups & Venture', 'Machine Learning', 'GenAI'],
+    color: '#BE185D',
+    accentBg: '#FDF2F8',
+    iconName: 'Rocket',
+  },
+  {
+    id: 'world',
+    name: 'World',
+    slug: 'world',
+    description: 'Global affairs, international treaties, foreign policy, and cross-border developments.',
+    subcategories: ['World news', 'Global Diplomacy', 'International Trade', 'Environment'],
+    color: '#0D9488',
+    accentBg: '#F0FDFA',
+    iconName: 'Globe',
+  },
 ];
+
+export function buildCategoryCondition(categoryParam?: string): Prisma.ArticleWhereInput | null {
+  if (!categoryParam || categoryParam === 'All' || categoryParam === 'all') {
+    return null;
+  }
+  const cat = categoryParam.trim().toLowerCase();
+
+  if (cat === 'technology & science' || cat === 'tech-science') {
+    return {
+      category: {
+        in: ['Technology & Science', 'Technology', 'Science', 'AI & Startups'],
+        mode: 'insensitive',
+      },
+    };
+  }
+  if (cat === 'business & economy' || cat === 'business-economy') {
+    return {
+      category: {
+        in: ['Business & Economy', 'Business', 'Careers'],
+        mode: 'insensitive',
+      },
+    };
+  }
+  if (cat === 'world & lifestyle' || cat === 'world-lifestyle') {
+    return {
+      category: {
+        in: ['World & Lifestyle', 'World'],
+        mode: 'insensitive',
+      },
+    };
+  }
+  if (cat === 'india & politics' || cat === 'india-politics' || cat === 'politics') {
+    return {
+      category: {
+        in: ['India & Politics', 'India'],
+        mode: 'insensitive',
+      },
+    };
+  }
+  if (cat === 'technology' || cat === 'tech') {
+    return {
+      OR: [
+        { category: { equals: 'Technology', mode: 'insensitive' } },
+        { category: { equals: 'Technology & Science', mode: 'insensitive' } },
+      ],
+    };
+  }
+  if (cat === 'science') {
+    return {
+      OR: [
+        { category: { equals: 'Science', mode: 'insensitive' } },
+        {
+          AND: [
+            { category: { equals: 'Technology & Science', mode: 'insensitive' } },
+            { subcategory: { contains: 'space', mode: 'insensitive' } },
+          ],
+        },
+      ],
+    };
+  }
+  if (cat === 'ai & startups' || cat === 'ai-startups' || cat === 'ai') {
+    return {
+      OR: [
+        { category: { equals: 'AI & Startups', mode: 'insensitive' } },
+        { subcategory: { contains: 'ai', mode: 'insensitive' } },
+        { subcategory: { contains: 'startup', mode: 'insensitive' } },
+      ],
+    };
+  }
+  if (cat === 'business') {
+    return {
+      OR: [
+        { category: { equals: 'Business', mode: 'insensitive' } },
+        { category: { equals: 'Business & Economy', mode: 'insensitive' } },
+      ],
+    };
+  }
+  if (cat === 'careers' || cat === 'career') {
+    return {
+      OR: [
+        { category: { equals: 'Careers', mode: 'insensitive' } },
+        { subcategory: { contains: 'career', mode: 'insensitive' } },
+        { subcategory: { contains: 'workforce', mode: 'insensitive' } },
+        { subcategory: { contains: 'education', mode: 'insensitive' } },
+      ],
+    };
+  }
+  if (cat === 'world') {
+    return {
+      OR: [
+        { category: { equals: 'World', mode: 'insensitive' } },
+        { category: { equals: 'World & Lifestyle', mode: 'insensitive' } },
+      ],
+    };
+  }
+  if (cat === 'sports') {
+    return {
+      category: { equals: 'Sports', mode: 'insensitive' },
+    };
+  }
+
+  return {
+    category: { equals: categoryParam, mode: 'insensitive' },
+  };
+}
 
 export async function getArticles(params: FeedQueryParams): Promise<PaginatedResponse<ArticleItem>> {
   const page = Math.max(1, Number(params.page) || 1);
@@ -91,13 +257,14 @@ export async function getArticles(params: FeedQueryParams): Promise<PaginatedRes
   const skip = (page - 1) * limit;
 
   const where: Prisma.ArticleWhereInput = {};
+  const andConditions: Prisma.ArticleWhereInput[] = [];
 
   // Category filter
   if (params.category && params.category !== 'All' && params.category !== 'all') {
-    where.category = {
-      equals: params.category,
-      mode: 'insensitive',
-    };
+    const catCond = buildCategoryCondition(params.category);
+    if (catCond) {
+      andConditions.push(catCond);
+    }
   }
 
   // Subcategory filter
@@ -129,11 +296,17 @@ export async function getArticles(params: FeedQueryParams): Promise<PaginatedRes
   // Search query (in title, summary, or publisher)
   if (params.q && params.q.trim().length > 0) {
     const query = params.q.trim();
-    where.OR = [
-      { title: { contains: query, mode: 'insensitive' } },
-      { summary: { contains: query, mode: 'insensitive' } },
-      { publisher: { contains: query, mode: 'insensitive' } },
-    ];
+    andConditions.push({
+      OR: [
+        { title: { contains: query, mode: 'insensitive' } },
+        { summary: { contains: query, mode: 'insensitive' } },
+        { publisher: { contains: query, mode: 'insensitive' } },
+      ],
+    });
+  }
+
+  if (andConditions.length > 0) {
+    where.AND = andConditions;
   }
 
   // Date filters based on original publishedAt timestamp
@@ -420,29 +593,16 @@ export async function getMapArticles(params: MapQueryParams): Promise<{
     }
   }
 
-  if (andConditions.length > 0) {
-    where.AND = andConditions;
-  }
-
   // 4. Category filter
   if (params.category && params.category !== 'All' && params.category !== 'all') {
-    const catLower = params.category.toLowerCase().trim();
-    const catMap: Record<string, string> = {
-      'politics': 'India & Politics',
-      'india-politics': 'India & Politics',
-      'technology': 'Technology & Science',
-      'tech-science': 'Technology & Science',
-      'science': 'Technology & Science',
-      'business': 'Business & Economy',
-      'business-economy': 'Business & Economy',
-      'sports': 'Sports',
-      'world': 'World & Lifestyle',
-      'world-lifestyle': 'World & Lifestyle',
-      'environment': 'World & Lifestyle',
-      'careers': 'Business & Economy',
-    };
-    const targetCat = catMap[catLower] || params.category;
-    where.category = { equals: targetCat, mode: 'insensitive' };
+    const catCond = buildCategoryCondition(params.category);
+    if (catCond) {
+      andConditions.push(catCond);
+    }
+  }
+
+  if (andConditions.length > 0) {
+    where.AND = andConditions;
   }
 
   // 5. Language filter
@@ -654,21 +814,44 @@ export function getFallbackMapArticles(params: MapQueryParams): ArticleItem[] {
   }
 
   if (params.category && params.category !== 'all' && params.category !== 'All') {
-    const catLower = params.category.toLowerCase();
-    const catMap: Record<string, string> = {
-      'politics': 'india & politics',
-      'india-politics': 'india & politics',
-      'technology': 'technology & science',
-      'tech-science': 'technology & science',
-      'science': 'technology & science',
-      'business': 'business & economy',
-      'business-economy': 'business & economy',
-      'sports': 'sports',
-      'world': 'world & lifestyle',
-      'world-lifestyle': 'world & lifestyle',
-    };
-    const target = catMap[catLower] || catLower;
-    list = list.filter((a) => a.category.toLowerCase() === target);
+    const catLower = params.category.toLowerCase().trim();
+    list = list.filter((a) => {
+      const aCat = a.category.toLowerCase();
+      if (catLower === 'technology & science' || catLower === 'tech-science') {
+        return aCat.includes('technology') || aCat.includes('science') || aCat.includes('ai');
+      }
+      if (catLower === 'business & economy' || catLower === 'business-economy') {
+        return aCat.includes('business') || aCat.includes('career') || aCat.includes('economy');
+      }
+      if (catLower === 'world & lifestyle' || catLower === 'world-lifestyle') {
+        return aCat.includes('world') || aCat.includes('lifestyle');
+      }
+      if (catLower === 'technology' || catLower === 'tech') {
+        return aCat === 'technology' || aCat === 'technology & science';
+      }
+      if (catLower === 'science') {
+        return aCat === 'science' || (aCat === 'technology & science' && (a.subcategory || '').toLowerCase().includes('space'));
+      }
+      if (catLower === 'ai & startups' || catLower === 'ai-startups' || catLower === 'ai') {
+        return aCat === 'ai & startups' || (a.subcategory || '').toLowerCase().includes('ai') || (a.subcategory || '').toLowerCase().includes('startup');
+      }
+      if (catLower === 'business') {
+        return aCat === 'business' || aCat === 'business & economy';
+      }
+      if (catLower === 'careers' || catLower === 'career') {
+        return aCat === 'careers' || (a.subcategory || '').toLowerCase().includes('career');
+      }
+      if (catLower === 'world') {
+        return aCat === 'world' || aCat === 'world & lifestyle';
+      }
+      if (catLower === 'india & politics' || catLower === 'india-politics' || catLower === 'politics') {
+        return aCat.includes('india') || aCat.includes('politics');
+      }
+      if (catLower === 'sports') {
+        return aCat === 'sports';
+      }
+      return aCat === catLower;
+    });
   }
 
   if (params.language && params.language !== 'all') {

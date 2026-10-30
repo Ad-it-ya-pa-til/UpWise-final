@@ -68,7 +68,38 @@ function renderFormattedContent(content: string): React.ReactNode {
       continue;
     }
 
-    if (line.startsWith('### ')) {
+    if (line.startsWith('```')) {
+      flushList();
+      const codeLines: string[] = [];
+      i += 1;
+      while (i < lines.length && !lines[i].trim().startsWith('```')) {
+        codeLines.push(lines[i]);
+        i += 1;
+      }
+      nodes.push(
+        <pre
+          key={`code-${i}`}
+          className="my-3 overflow-x-auto rounded-md border border-[#E8E2D8] bg-[#F5EFEB] p-3"
+        >
+          <code className="font-mono text-[11px] leading-relaxed text-[#1C1917] whitespace-pre">
+            {codeLines.join('\n')}
+          </code>
+        </pre>
+      );
+      continue;
+    }
+
+    if (line.startsWith('#### ')) {
+      flushList();
+      nodes.push(
+        <h5
+          key={`h5-${i}`}
+          className="font-serif font-bold text-xs sm:text-[13px] text-[#141412] mt-3 mb-1 tracking-tight"
+        >
+          {renderInline(line.replace('#### ', ''))}
+        </h5>
+      );
+    } else if (line.startsWith('### ')) {
       flushList();
       nodes.push(
         <h4
@@ -393,6 +424,7 @@ export const AiChatWidget: React.FC<AiChatWidgetProps> = ({
                 ? currentArticle.content.join('\n\n')
                 : currentArticle.summary,
               category: currentArticle.categoryName,
+              publishedAt: currentArticle.publishedAt,
             }
           : undefined,
         history,
@@ -407,12 +439,14 @@ export const AiChatWidget: React.FC<AiChatWidgetProps> = ({
       };
 
       setMessages((prev) => [...prev, assistantMsg]);
-    } catch {
+    } catch (err) {
       const errorMsg: ChatMessage = {
         id: `err-${Date.now()}`,
         role: 'assistant',
         content:
-          'Our editorial service encountered a connection issue. Please verify your connection or retry your inquiry.',
+          err instanceof Error && err.message.trim()
+            ? err.message
+            : 'The AI assistant is temporarily unavailable. Please try again shortly.',
         timestamp: new Date(),
         isError: true,
       };

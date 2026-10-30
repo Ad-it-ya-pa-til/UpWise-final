@@ -1,8 +1,14 @@
 export type CategoryKey = 
+  | 'Technology'
   | 'India & Politics'
+  | 'Business'
+  | 'Science'
+  | 'Sports'
+  | 'World'
+  | 'Careers'
+  | 'AI & Startups'
   | 'Technology & Science'
   | 'Business & Economy'
-  | 'Sports'
   | 'World & Lifestyle';
 
 export interface CategoryInfo {

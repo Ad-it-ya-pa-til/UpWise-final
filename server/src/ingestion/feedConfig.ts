@@ -11,10 +11,44 @@ export interface FeedSourceConfig {
 
 export const FEED_SOURCES: FeedSourceConfig[] = [
   // ==========================================
-  // ENGLISH SOURCES
+  // 1. TECHNOLOGY (EN & HI)
   // ==========================================
+  {
+    name: 'The Verge',
+    feedUrl: 'https://www.theverge.com/rss/index.xml',
+    category: 'Technology',
+    subcategory: 'Consumer Hardware & Tech',
+    defaultPublisher: 'The Verge',
+    language: 'en',
+  },
+  {
+    name: 'Ars Technica',
+    feedUrl: 'https://feeds.arstechnica.com/arstechnica/index',
+    category: 'Technology',
+    subcategory: 'Computing Platforms & Systems',
+    defaultPublisher: 'Ars Technica',
+    language: 'en',
+  },
+  {
+    name: 'TechCrunch Technology',
+    feedUrl: 'https://techcrunch.com/feed/',
+    category: 'Technology',
+    subcategory: 'Digital Infrastructure',
+    defaultPublisher: 'TechCrunch',
+    language: 'en',
+  },
+  {
+    name: 'Amar Ujala Tech',
+    feedUrl: 'https://www.amarujala.com/rss/technology.xml',
+    category: 'Technology',
+    subcategory: 'टेक और गैजेट्स',
+    defaultPublisher: 'अमर उजाला',
+    language: 'hi',
+  },
 
-  // India & Politics (EN)
+  // ==========================================
+  // 2. INDIA & POLITICS (EN & HI)
+  // ==========================================
   {
     name: 'The Hindu National',
     feedUrl: 'https://www.thehindu.com/news/national/feeder/default.rss',
@@ -27,112 +61,10 @@ export const FEED_SOURCES: FeedSourceConfig[] = [
     name: 'Indian Express National',
     feedUrl: 'https://indianexpress.com/section/india/feed/',
     category: 'India & Politics',
-    subcategory: 'Current affairs',
+    subcategory: 'Governance & Public Policy',
     defaultPublisher: 'The Indian Express',
     language: 'en',
   },
-
-  // Technology & Science (EN)
-  {
-    name: 'TechCrunch',
-    feedUrl: 'https://techcrunch.com/feed/',
-    category: 'Technology & Science',
-    subcategory: 'Startups & AI',
-    defaultPublisher: 'TechCrunch',
-    language: 'en',
-  },
-  {
-    name: 'The Verge',
-    feedUrl: 'https://www.theverge.com/rss/index.xml',
-    category: 'Technology & Science',
-    subcategory: 'AI and technology',
-    defaultPublisher: 'The Verge',
-    language: 'en',
-  },
-  {
-    name: 'Ars Technica',
-    feedUrl: 'https://feeds.arstechnica.com/arstechnica/index',
-    category: 'Technology & Science',
-    subcategory: 'Scientific discoveries',
-    defaultPublisher: 'Ars Technica',
-    language: 'en',
-  },
-  {
-    name: 'NASA Releases',
-    feedUrl: 'https://www.nasa.gov/news-release/feed/',
-    category: 'Technology & Science',
-    subcategory: 'Space',
-    defaultPublisher: 'NASA',
-    language: 'en',
-  },
-
-  // Business & Economy (EN)
-  {
-    name: 'LiveMint Economy',
-    feedUrl: 'https://www.livemint.com/rss/economy',
-    category: 'Business & Economy',
-    subcategory: 'Economy',
-    defaultPublisher: 'Mint',
-    language: 'en',
-  },
-  {
-    name: 'LiveMint Markets',
-    feedUrl: 'https://www.livemint.com/rss/markets',
-    category: 'Business & Economy',
-    subcategory: 'Finance and markets',
-    defaultPublisher: 'Mint',
-    language: 'en',
-  },
-  {
-    name: 'CNBC Business',
-    feedUrl: 'https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10001147',
-    category: 'Business & Economy',
-    subcategory: 'Business',
-    defaultPublisher: 'CNBC',
-    language: 'en',
-  },
-
-  // Sports (EN)
-  {
-    name: 'ESPN Cricinfo',
-    feedUrl: 'https://www.espncricinfo.com/rss/content/story/feeds/0.xml',
-    category: 'Sports',
-    subcategory: 'Cricket',
-    defaultPublisher: 'ESPNcricinfo',
-    language: 'en',
-  },
-  {
-    name: 'BBC Sport',
-    feedUrl: 'http://feeds.bbci.co.uk/sport/rss.xml',
-    category: 'Sports',
-    subcategory: 'Major tournaments',
-    defaultPublisher: 'BBC Sport',
-    language: 'en',
-  },
-
-  // World & Lifestyle (EN)
-  {
-    name: 'BBC World',
-    feedUrl: 'http://feeds.bbci.co.uk/news/world/rss.xml',
-    category: 'World & Lifestyle',
-    subcategory: 'World news',
-    defaultPublisher: 'BBC News',
-    language: 'en',
-  },
-  {
-    name: 'The Guardian World',
-    feedUrl: 'https://www.theguardian.com/world/rss',
-    category: 'World & Lifestyle',
-    subcategory: 'Environment',
-    defaultPublisher: 'The Guardian',
-    language: 'en',
-  },
-
-  // ==========================================
-  // HINDI SOURCES (हिन्दी समाचार स्रोत)
-  // ==========================================
-
-  // India & Politics (HI)
   {
     name: 'Amar Ujala National',
     feedUrl: 'https://www.amarujala.com/rss/national-news.xml',
@@ -150,27 +82,89 @@ export const FEED_SOURCES: FeedSourceConfig[] = [
     language: 'hi',
   },
 
-  // Technology & Science (HI)
+  // ==========================================
+  // 3. BUSINESS (EN & HI)
+  // ==========================================
   {
-    name: 'Amar Ujala Tech',
-    feedUrl: 'https://www.amarujala.com/rss/technology.xml',
-    category: 'Technology & Science',
-    subcategory: 'टेक और गैजेट्स',
-    defaultPublisher: 'अमर उजाला',
-    language: 'hi',
+    name: 'LiveMint Economy',
+    feedUrl: 'https://www.livemint.com/rss/economy',
+    category: 'Business',
+    subcategory: 'Macroeconomics & Fiscal Policy',
+    defaultPublisher: 'Mint',
+    language: 'en',
   },
-
-  // Business & Economy (HI)
+  {
+    name: 'LiveMint Markets',
+    feedUrl: 'https://www.livemint.com/rss/markets',
+    category: 'Business',
+    subcategory: 'Markets & Indices',
+    defaultPublisher: 'Mint',
+    language: 'en',
+  },
+  {
+    name: 'CNBC Business',
+    feedUrl: 'https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10001147',
+    category: 'Business',
+    subcategory: 'Global Trade & Banking',
+    defaultPublisher: 'CNBC',
+    language: 'en',
+  },
   {
     name: 'Amar Ujala Business',
     feedUrl: 'https://www.amarujala.com/rss/business-news.xml',
-    category: 'Business & Economy',
+    category: 'Business',
     subcategory: 'कारोबार और बाज़ार',
     defaultPublisher: 'अमर उजाला',
     language: 'hi',
   },
 
-  // Sports (HI)
+  // ==========================================
+  // 4. SCIENCE (EN)
+  // ==========================================
+  {
+    name: 'NASA Releases',
+    feedUrl: 'https://www.nasa.gov/news-release/feed/',
+    category: 'Science',
+    subcategory: 'Space Exploration & Astronomy',
+    defaultPublisher: 'NASA',
+    language: 'en',
+  },
+  {
+    name: 'Phys.org Science',
+    feedUrl: 'https://phys.org/rss-feed/',
+    category: 'Science',
+    subcategory: 'Physics & Earth Sciences',
+    defaultPublisher: 'Phys.org',
+    language: 'en',
+  },
+  {
+    name: 'ScienceDaily Discoveries',
+    feedUrl: 'https://www.sciencedaily.com/rss/all.xml',
+    category: 'Science',
+    subcategory: 'Bio & Health Sciences',
+    defaultPublisher: 'ScienceDaily',
+    language: 'en',
+  },
+
+  // ==========================================
+  // 5. SPORTS (EN & HI)
+  // ==========================================
+  {
+    name: 'ESPN Cricinfo',
+    feedUrl: 'https://www.espncricinfo.com/rss/content/story/feeds/0.xml',
+    category: 'Sports',
+    subcategory: 'Cricket & Tournaments',
+    defaultPublisher: 'ESPNcricinfo',
+    language: 'en',
+  },
+  {
+    name: 'BBC Sport',
+    feedUrl: 'http://feeds.bbci.co.uk/sport/rss.xml',
+    category: 'Sports',
+    subcategory: 'Major tournaments',
+    defaultPublisher: 'BBC Sport',
+    language: 'en',
+  },
   {
     name: 'Amar Ujala Sports',
     feedUrl: 'https://www.amarujala.com/rss/sports-news.xml',
@@ -180,13 +174,79 @@ export const FEED_SOURCES: FeedSourceConfig[] = [
     language: 'hi',
   },
 
-  // World & Lifestyle (HI)
+  // ==========================================
+  // 6. WORLD (EN & HI)
+  // ==========================================
+  {
+    name: 'BBC World',
+    feedUrl: 'http://feeds.bbci.co.uk/news/world/rss.xml',
+    category: 'World',
+    subcategory: 'Global Dispatch',
+    defaultPublisher: 'BBC News',
+    language: 'en',
+  },
+  {
+    name: 'The Guardian World',
+    feedUrl: 'https://www.theguardian.com/world/rss',
+    category: 'World',
+    subcategory: 'International Relations & Climate',
+    defaultPublisher: 'The Guardian',
+    language: 'en',
+  },
   {
     name: 'Amar Ujala World',
     feedUrl: 'https://www.amarujala.com/rss/world-news.xml',
-    category: 'World & Lifestyle',
+    category: 'World',
     subcategory: 'अंतरराष्ट्रीय जगत',
     defaultPublisher: 'अमर उजाला',
     language: 'hi',
+  },
+
+  // ==========================================
+  // 7. CAREERS (EN)
+  // ==========================================
+  {
+    name: 'Indian Express Jobs',
+    feedUrl: 'https://indianexpress.com/section/jobs/feed/',
+    category: 'Careers',
+    subcategory: 'Workforce & Examinations',
+    defaultPublisher: 'The Indian Express',
+    language: 'en',
+  },
+  {
+    name: 'LiveMint Education',
+    feedUrl: 'https://www.livemint.com/rss/education',
+    category: 'Careers',
+    subcategory: 'Higher Education & Industry Skills',
+    defaultPublisher: 'Mint',
+    language: 'en',
+  },
+  {
+    name: 'The Hindu Education',
+    feedUrl: 'https://www.thehindu.com/education/feeder/default.rss',
+    category: 'Careers',
+    subcategory: 'Academics & Research Careers',
+    defaultPublisher: 'The Hindu',
+    language: 'en',
+  },
+
+  // ==========================================
+  // 8. AI & STARTUPS (EN)
+  // ==========================================
+  {
+    name: 'TechCrunch Startups',
+    feedUrl: 'https://techcrunch.com/category/startups/feed/',
+    category: 'AI & Startups',
+    subcategory: 'Startups & Venture',
+    defaultPublisher: 'TechCrunch',
+    language: 'en',
+  },
+  {
+    name: 'TechCrunch AI',
+    feedUrl: 'https://techcrunch.com/category/artificial-intelligence/feed/',
+    category: 'AI & Startups',
+    subcategory: 'Artificial Intelligence & Models',
+    defaultPublisher: 'TechCrunch',
+    language: 'en',
   },
 ];

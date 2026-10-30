@@ -11,7 +11,7 @@
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio",
     "seed": "tsx prisma/seed.ts",
-    "test": "node --import tsx --test src/tests/auth.test.ts src/tests/map.test.ts src/tests/learning.test.ts"
+    "test": "node --import tsx --test src/tests/auth.test.ts src/tests/map.test.ts src/tests/learning.test.ts src/tests/ingestion.test.ts"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",

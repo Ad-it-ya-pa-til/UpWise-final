@@ -6,6 +6,9 @@ import { SEED_ARTICLES } from './seedData.js';
 import { extractArticleLocation } from '../services/geoService.js';
 import crypto from 'crypto';
 
+let schedulerTimer: NodeJS.Timeout | null = null;
+let isRefreshing = false;
+
 export async function seedInitialArticles(): Promise<number> {
   const count = await prisma.article.count();
   if (count > 0) {
@@ -85,29 +88,54 @@ export async function seedInitialArticles(): Promise<number> {
 }
 
 export async function refreshAllFeeds(): Promise<{ fetched: number; inserted: number; errors: number }> {
-  console.log(`[Ingestion] Starting RSS refresh across ${FEED_SOURCES.length} sources...`);
+  if (isRefreshing) {
+    console.log('[Ingestion] Ingestion cycle already active. Skipping overlapping run.');
+    return { fetched: 0, inserted: 0, errors: 0 };
+  }
+
+  isRefreshing = true;
+  console.log(`[Ingestion] Starting live multi-source RSS refresh across ${FEED_SOURCES.length} sources...`);
   let totalFetched = 0;
   let totalInserted = 0;
   let errorCount = 0;
 
-  for (const source of FEED_SOURCES) {
-    try {
-      const items = await fetchFeedItems(source);
-      totalFetched += items.length;
+  try {
+    for (const source of FEED_SOURCES) {
+      try {
+        const items = await fetchFeedItems(source);
+        totalFetched += items.length;
 
-      for (const item of items) {
-        try {
-          // Upsert article based on unique URL
-          const existing = await prisma.article.findUnique({
-            where: { url: item.url },
-          });
+        for (const item of items) {
+          try {
+            if (!item.title || item.title.trim().length < 8 || !item.url) {
+              continue;
+            }
 
-          if (!existing) {
+            // Deduplication Check 1: Unique URL
+            const existingByUrl = await prisma.article.findUnique({
+              where: { url: item.url },
+            });
+            if (existingByUrl) {
+              continue;
+            }
+
+            // Deduplication Check 2: Canonical content hash (title + publisher)
+            if (item.contentHash) {
+              const existingByHash = await prisma.article.findFirst({
+                where: { contentHash: item.contentHash },
+              });
+              if (existingByHash) {
+                continue;
+              }
+            }
+
+            // Timestamp validation: prevent future timestamp skew
             const validPublishedAt =
-              item.publishedAt && !isNaN(item.publishedAt.getTime())
+              item.publishedAt && !isNaN(item.publishedAt.getTime()) && item.publishedAt.getTime() <= Date.now()
                 ? item.publishedAt
                 : new Date();
 
+            // Extract real-world geographic coordinates
             const geo = extractArticleLocation(item.title, item.summary, item.content || undefined);
 
             const created = await prisma.article.create({
@@ -123,7 +151,7 @@ export async function refreshAllFeeds(): Promise<{ fetched: number; inserted: nu
                 imageUrl: item.imageUrl,
                 contentHash: item.contentHash,
                 readingTime: item.readingTime,
-                trending: Math.random() > 0.75, // mark some live stories as trending
+                trending: Math.random() > 0.8,
                 language: item.language || 'en',
                 latitude: geo?.latitude || null,
                 longitude: geo?.longitude || null,
@@ -134,32 +162,59 @@ export async function refreshAllFeeds(): Promise<{ fetched: number; inserted: nu
               },
             });
             totalInserted++;
-            // Cluster new article
-            await clusterNewArticle(created.id);
-          }
-        } catch (itemErr) {
-          console.warn(`[Ingestion] Skipping invalid item "${item.title}":`, (itemErr as Error).message);
-        }
-      }
 
-      await prisma.source.upsert({
-        where: { feedUrl: source.feedUrl },
-        update: { lastFetchedAt: new Date() },
-        create: {
-          name: source.name,
-          feedUrl: source.feedUrl,
-          category: source.category,
-          subcategory: source.subcategory,
-          sourceType: 'RSS',
-          lastFetchedAt: new Date(),
-        },
-      });
-    } catch (err) {
-      errorCount++;
-      console.error(`[Ingestion] Source error for ${source.name}:`, (err as Error).message);
+            // Cluster new article asynchronously
+            clusterNewArticle(created.id).catch((clusterErr) => {
+              console.warn(`[Clustering] Non-blocking cluster error for ${created.id}:`, clusterErr.message);
+            });
+          } catch (itemErr) {
+            console.warn(`[Ingestion] Skipping item "${item.title}":`, (itemErr as Error).message);
+          }
+        }
+
+        // Update Source tracking record
+        await prisma.source.upsert({
+          where: { feedUrl: source.feedUrl },
+          update: { lastFetchedAt: new Date(), enabled: true },
+          create: {
+            name: source.name,
+            feedUrl: source.feedUrl,
+            category: source.category,
+            subcategory: source.subcategory,
+            sourceType: 'RSS',
+            enabled: true,
+            lastFetchedAt: new Date(),
+          },
+        });
+      } catch (err) {
+        errorCount++;
+        console.error(`[Ingestion] Source error for ${source.name} (${source.feedUrl}):`, (err as Error).message);
+      }
     }
+  } finally {
+    isRefreshing = false;
   }
 
-  console.log(`[Ingestion] Refresh complete: ${totalFetched} fetched, ${totalInserted} new inserted, ${errorCount} errors.`);
+  console.log(`[Ingestion] Multi-source refresh complete: ${totalFetched} fetched, ${totalInserted} new inserted, ${errorCount} errors.`);
   return { fetched: totalFetched, inserted: totalInserted, errors: errorCount };
+}
+
+/**
+ * Safe background scheduler for recurring news aggregation
+ */
+export function startIngestionScheduler(intervalMs = 30 * 60 * 1000): void {
+  if (schedulerTimer) return;
+  console.log(`[Scheduler] Live news aggregation scheduled to run every ${Math.round(intervalMs / 60000)} minutes.`);
+  schedulerTimer = setInterval(() => {
+    refreshAllFeeds().catch((err) => {
+      console.warn('[Scheduler Background Error]', err.message);
+    });
+  }, intervalMs);
+}
+
+export function stopIngestionScheduler(): void {
+  if (schedulerTimer) {
+    clearInterval(schedulerTimer);
+    schedulerTimer = null;
+  }
 }

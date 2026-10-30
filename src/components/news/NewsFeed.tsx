@@ -17,6 +17,7 @@ import { InShortsCard } from './InShortsCard'
 import { BriefingDesksSection } from './BriefingDesksSection'
 import { ONBOARDING_TOPICS } from '../auth/PersonalizeFeedOnboarding'
 import { matchDatePreset } from '../../utils/dateUtils'
+import { matchesCategoryFilter } from '../../utils/categoryTranslation'
 
 interface NewsFeedProps {
   articles: Article[]
@@ -105,10 +106,7 @@ export const NewsFeed: React.FC<NewsFeedProps> = ({
       return false
     }
 
-    if (selectedCategoryId && article.categoryId !== selectedCategoryId) {
-      return false
-    }
-    if (selectedSubcategoryId && article.subcategoryId !== selectedSubcategoryId) {
+    if (!matchesCategoryFilter(article, selectedCategoryId, selectedSubcategoryId)) {
       return false
     }
 

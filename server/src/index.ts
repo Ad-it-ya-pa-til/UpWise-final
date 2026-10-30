@@ -15,7 +15,8 @@ import aiRoutes from './routes/aiRoutes.js';
 import quizRoutes from './routes/quizRoutes.js';
 import rewardRoutes from './routes/rewardRoutes.js';
 import prisma from './db.js';
-import { seedInitialArticles, refreshAllFeeds } from './ingestion/ingestionService.js';
+import { isGroqConfigured, verifyGroqModel } from './services/groqClient.js';
+import { seedInitialArticles, refreshAllFeeds, startIngestionScheduler } from './ingestion/ingestionService.js';
 import { seedDefaultUsers } from './services/authService.js';
 import { seedCommunityPosts } from './services/communityService.js';
 
@@ -100,6 +101,20 @@ if (!isTestEnvironment) {
     console.log(`📡 Health check: http://localhost:${PORT}/api/health`);
     console.log(`=========================================`);
 
+    if (isGroqConfigured()) {
+      verifyGroqModel()
+        .then((verification) => {
+          if (verification.ok) {
+            console.log(`🤖 Groq AI ready (model: ${verification.model})`);
+          } else {
+            console.warn(`[AI] ${verification.error || 'Groq model verification failed.'}`);
+          }
+        })
+        .catch(() => console.warn('[AI] Groq model verification failed.'));
+    } else {
+      console.warn('[AI] GROQ_API_KEY is not configured. Chat requests will return a clear configuration error.');
+    }
+
     try {
       await seedDefaultUsers();
       await seedCommunityPosts();
@@ -110,6 +125,10 @@ if (!isTestEnvironment) {
         refreshAllFeeds().catch((err) => {
           console.warn('[Background RSS error]', err.message);
         });
+
+        startIngestionScheduler(30 * 60 * 1000); // 30 minutes recurring schedule
+
+
       }, 2000);
     } catch (error) {
       console.error('[Initialization Error]', error);

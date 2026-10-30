@@ -37,14 +37,14 @@ export interface HeaderProps {
 
 export const NEWSPAPER_SECTIONS = [
   { id: 'all', label: 'Front Page', groupId: '', subcategoryId: undefined },
-  { id: 'tech', label: 'Technology', groupId: 'tech-science', subcategoryId: 'tech-ai' },
+  { id: 'tech', label: 'Technology', groupId: 'technology', subcategoryId: undefined },
   { id: 'politics', label: 'India & Politics', groupId: 'india-politics', subcategoryId: undefined },
-  { id: 'business', label: 'Business', groupId: 'business-economy', subcategoryId: 'biz-markets' },
-  { id: 'science', label: 'Science', groupId: 'tech-science', subcategoryId: 'tech-space' },
+  { id: 'business', label: 'Business', groupId: 'business', subcategoryId: undefined },
+  { id: 'science', label: 'Science', groupId: 'science', subcategoryId: undefined },
   { id: 'sports', label: 'Sports', groupId: 'sports', subcategoryId: undefined },
-  { id: 'world', label: 'World', groupId: 'world-lifestyle', subcategoryId: 'wld-geopolitics' },
-  { id: 'career', label: 'Careers', groupId: 'business-economy', subcategoryId: 'biz-startups' },
-  { id: 'ai', label: 'AI & Startups', groupId: 'tech-science', subcategoryId: 'tech-ai' },
+  { id: 'world', label: 'World', groupId: 'world', subcategoryId: undefined },
+  { id: 'career', label: 'Careers', groupId: 'careers', subcategoryId: undefined },
+  { id: 'ai', label: 'AI & Startups', groupId: 'ai-startups', subcategoryId: undefined },
 ]
 
 export const Header: React.FC<HeaderProps> = ({
@@ -93,6 +93,15 @@ export const Header: React.FC<HeaderProps> = ({
       if (!sec.subcategoryId) return true
       return sec.subcategoryId === selectedSubcategoryId
     }
+    const sel = (selectedCategoryId || '').toLowerCase()
+    if (sec.id === 'tech' && (sel === 'technology' || sel === 'tech')) return true
+    if (sec.id === 'politics' && (sel === 'india-politics' || sel === 'politics')) return true
+    if (sec.id === 'business' && (sel === 'business' || sel === 'business-economy')) return true
+    if (sec.id === 'science' && sel === 'science') return true
+    if (sec.id === 'sports' && sel === 'sports') return true
+    if (sec.id === 'world' && (sel === 'world' || sel === 'world-lifestyle')) return true
+    if (sec.id === 'career' && (sel === 'careers' || sel === 'career')) return true
+    if (sec.id === 'ai' && (sel === 'ai-startups' || sel === 'ai')) return true
     return false
   }
 

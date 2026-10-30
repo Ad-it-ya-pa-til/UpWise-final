@@ -10,7 +10,6 @@ import { Article, LanguageMode } from '../types/news'
 import { UserProfile } from '../types/navigation'
 import { NEWS_ARTICLES } from '../data/newsData'
 import { SEED_COMMUNITY_POSTS, CommunityPost, CommunityComment } from '../data/communityData'
-import { generateSimulatedAiResponse } from '../data/aiAssistantData'
 import { matchDatePreset } from '../utils/dateUtils'
 import { SUPPORTED_LOCATIONS, LocationDefinition, getLocationById } from '../data/newsLocations'
 
@@ -82,14 +81,28 @@ export interface FetchArticlesParams {
 }
 
 export const CATEGORY_MAP: Record<string, { id: string; name: string }> = {
+  // Official 8 categories
+  'technology': { id: 'technology', name: 'Technology' },
+  'tech': { id: 'technology', name: 'Technology' },
   'india-politics': { id: 'india-politics', name: 'India & Politics' },
   'india & politics': { id: 'india-politics', name: 'India & Politics' },
+  'politics': { id: 'india-politics', name: 'India & Politics' },
+  'business': { id: 'business', name: 'Business' },
+  'science': { id: 'science', name: 'Science' },
+  'sports': { id: 'sports', name: 'Sports' },
+  'world': { id: 'world', name: 'World' },
+  'careers': { id: 'careers', name: 'Careers' },
+  'career': { id: 'careers', name: 'Careers' },
+  'ai & startups': { id: 'ai-startups', name: 'AI & Startups' },
+  'ai-startups': { id: 'ai-startups', name: 'AI & Startups' },
+  'ai': { id: 'ai-startups', name: 'AI & Startups' },
+
+  // Compound legacy mappings (for backwards compatibility)
   'tech-science': { id: 'tech-science', name: 'Technology & Science' },
   'technology & science': { id: 'tech-science', name: 'Technology & Science' },
   'technology-science': { id: 'tech-science', name: 'Technology & Science' },
   'business-economy': { id: 'business-economy', name: 'Business & Economy' },
   'business & economy': { id: 'business-economy', name: 'Business & Economy' },
-  'sports': { id: 'sports', name: 'Sports' },
   'world-lifestyle': { id: 'world-lifestyle', name: 'World & Lifestyle' },
   'world & lifestyle': { id: 'world-lifestyle', name: 'World & Lifestyle' },
 }
@@ -266,9 +279,39 @@ export async function fetchArticlesFromBackend(
 
   // Category Filter
   if (params.category && params.category !== 'all' && params.category !== 'All') {
-    filtered = filtered.filter(
-      (a) => a.categoryId.toLowerCase() === params.category?.toLowerCase()
-    )
+    const targetCat = params.category.toLowerCase().trim()
+    filtered = filtered.filter((a) => {
+      const artCat = a.categoryId.toLowerCase()
+      if (artCat === targetCat) return true
+      if (targetCat === 'technology' || targetCat === 'tech') {
+        return artCat === 'technology' || (artCat === 'tech-science' && !(a.subcategoryId || '').includes('space'))
+      }
+      if (targetCat === 'science') {
+        return artCat === 'science' || (artCat === 'tech-science' && (a.subcategoryId || '').includes('space'))
+      }
+      if (targetCat === 'ai-startups' || targetCat === 'ai' || targetCat === 'ai & startups') {
+        return artCat === 'ai-startups' || (artCat === 'tech-science' && (a.subcategoryId || '').includes('ai'))
+      }
+      if (targetCat === 'careers' || targetCat === 'career') {
+        return artCat === 'careers' || (artCat === 'business-economy' && (a.subcategoryId || '').includes('career'))
+      }
+      if (targetCat === 'business') {
+        return artCat === 'business' || artCat === 'business-economy'
+      }
+      if (targetCat === 'world') {
+        return artCat === 'world' || artCat === 'world-lifestyle'
+      }
+      if (targetCat === 'tech-science' || targetCat === 'technology & science') {
+        return artCat === 'tech-science' || artCat === 'technology' || artCat === 'science' || artCat === 'ai-startups'
+      }
+      if (targetCat === 'business-economy' || targetCat === 'business & economy') {
+        return artCat === 'business-economy' || artCat === 'business' || artCat === 'careers'
+      }
+      if (targetCat === 'world-lifestyle' || targetCat === 'world & lifestyle') {
+        return artCat === 'world-lifestyle' || artCat === 'world'
+      }
+      return false
+    })
   }
 
   // Subcategory Filter
@@ -1391,8 +1434,36 @@ export async function moderateCommunityPostApi(
 }
 
 // ----------------------------------------------------------------------
-// AI Editorial Assistant (Backend & Local Fallback)
+// AI Editorial Assistant (Groq-powered Express Backend)
 // ----------------------------------------------------------------------
+
+export interface AiChatSource {
+  title: string
+  url: string
+  publisher: string
+  publishedAt?: string
+}
+
+export interface AiChatResult {
+  reply: string
+  isAiLive: boolean
+  model: string
+  sources: AiChatSource[]
+  grounding: 'news' | 'general'
+  retrievedArticleCount: number
+}
+
+export class AiApiError extends Error {
+  readonly status: number
+  readonly code?: string
+
+  constructor(message: string, status = 0, code?: string) {
+    super(message)
+    this.name = 'AiApiError'
+    this.status = status
+    this.code = code
+  }
+}
 
 export async function askAiAssistantApi(payload: {
   message: string
@@ -1403,48 +1474,60 @@ export async function askAiAssistantApi(payload: {
     summary?: string
     content?: string
     category?: string
+    publishedAt?: string
   }
   language?: 'en' | 'hi'
   history?: { role: 'user' | 'assistant'; content: string }[]
-}): Promise<{ reply: string; isAiLive: boolean; model: string }> {
+}): Promise<AiChatResult> {
+  let res: Response
+
   try {
-    const res = await fetch('/api/ai/chat', {
+    res = await fetch('/api/ai/chat', {
       method: 'POST',
       headers: defaultHeaders(),
       body: JSON.stringify(payload),
     })
-    if (res.ok) {
-      const json = await res.json()
-      if (json.success && json.reply) {
-        return {
-          reply: json.reply,
-          isAiLive: Boolean(json.isAiLive),
-          model: json.model || 'Gemini 1.5 Flash',
-        }
-      }
-    }
   } catch {
-    // Offline or test fallback
+    throw new AiApiError(
+      'Could not reach the AI assistant service. Please check your connection and try again.',
+      0,
+      'NETWORK_ERROR'
+    )
   }
 
-  // Realistic thinking latency
-  await new Promise((resolve) => setTimeout(resolve, 300))
+  let json: any = null
+  try {
+    json = await res.json()
+  } catch {
+    json = null
+  }
 
-  const matchedArticle = payload.articleContext
-    ? ({
-        title: payload.articleContext.title,
-        source: { name: payload.articleContext.publisher || 'Upwise Wire' },
-        summary: payload.articleContext.summary || '',
-        categoryName: payload.articleContext.category || 'General',
-      } as Article)
-    : null
+  if (!res.ok || !json?.success || typeof json.reply !== 'string' || json.reply.trim().length === 0) {
+    const fallbackMessages: Record<number, string> = {
+      0: 'Could not reach the AI assistant service. Please check your connection and try again.',
+      400: 'The assistant could not process that message. Please shorten or rephrase it and try again.',
+      401: 'Your session has expired. Please sign in again and retry.',
+      429: 'The AI assistant is receiving too many requests. Please wait a moment and try again.',
+      503: 'The AI assistant is not configured or is temporarily unavailable. Please try again shortly.',
+      504: 'The AI assistant took too long to respond. Please try again.',
+    }
 
-  const result = generateSimulatedAiResponse(payload.message, matchedArticle)
+    throw new AiApiError(
+      typeof json?.error === 'string' && json.error.trim()
+        ? json.error
+        : fallbackMessages[res.status] || 'The AI assistant is temporarily unavailable. Please try again shortly.',
+      res.status,
+      typeof json?.code === 'string' ? json.code : undefined
+    )
+  }
 
   return {
-    reply: result.reply,
-    isAiLive: false,
-    model: result.modelName,
+    reply: json.reply,
+    isAiLive: Boolean(json.isAiLive),
+    model: typeof json.model === 'string' && json.model ? json.model : 'Groq AI',
+    sources: Array.isArray(json.sources) ? json.sources : [],
+    grounding: json.grounding === 'news' ? 'news' : 'general',
+    retrievedArticleCount: Number(json.retrievedArticleCount) || 0,
   }
 }
 

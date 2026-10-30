@@ -4,7 +4,7 @@ import assert from 'node:assert/strict'
 import { matchDatePreset, formatPublicationDate } from '../utils/dateUtils.js'
 import { NEWS_ARTICLES } from '../data/newsData.js'
 import { SEED_COMMUNITY_POSTS, COMMUNITY_CATEGORIES } from '../data/communityData.js'
-import { generateSimulatedAiResponse } from '../data/aiAssistantData.js'
+import { generateSimulatedAiResponse } from './fixtures/simulatedAiResponse.js'
 import {
   fetchArticlesFromBackend,
   loginApi,
@@ -366,4 +366,66 @@ test('Learning Studio: Fallback Flashcards Generation with Topic and Count', asy
   assert.ok(card.back)
   assert.ok(card.sourceArticleTitle)
   assert.ok(card.sourcePublisher)
+})
+
+test('Official 8 News Categories: Full coverage in Navigation and Filter System', async () => {
+  const { NEWSPAPER_SECTIONS } = await import('../components/layout/Header.js')
+  const { matchesCategoryFilter } = await import('../utils/categoryTranslation.js')
+
+  // 1. Verify Header contains all 8 official sections + Front Page
+  const expectedLabels = [
+    'Front Page',
+    'Technology',
+    'India & Politics',
+    'Business',
+    'Science',
+    'Sports',
+    'World',
+    'Careers',
+    'AI & Startups',
+  ]
+  const actualLabels = NEWSPAPER_SECTIONS.map((s) => s.label)
+  for (const expected of expectedLabels) {
+    assert.ok(actualLabels.includes(expected), `Header must include section: "${expected}"`)
+  }
+
+  // 2. Test matchesCategoryFilter across all 8 official categories
+  const testArticles = NEWS_ARTICLES
+  assert.ok(testArticles.length > 0, 'NEWS_ARTICLES is populated')
+
+  // Technology
+  const techMatches = testArticles.filter((a) => matchesCategoryFilter(a, 'technology'))
+  assert.ok(techMatches.length > 0, 'Matches technology articles')
+
+  // India & Politics
+  const politicsMatches = testArticles.filter((a) => matchesCategoryFilter(a, 'india-politics'))
+  assert.ok(politicsMatches.length > 0, 'Matches politics articles')
+
+  // Business
+  const bizMatches = testArticles.filter((a) => matchesCategoryFilter(a, 'business'))
+  assert.ok(bizMatches.length > 0, 'Matches business articles')
+
+  // Science
+  const scienceMatches = testArticles.filter((a) => matchesCategoryFilter(a, 'science'))
+  assert.ok(scienceMatches.length > 0, 'Matches science articles')
+
+  // Sports
+  const sportsMatches = testArticles.filter((a) => matchesCategoryFilter(a, 'sports'))
+  assert.ok(sportsMatches.length > 0, 'Matches sports articles')
+
+  // World
+  const worldMatches = testArticles.filter((a) => matchesCategoryFilter(a, 'world'))
+  assert.ok(worldMatches.length > 0, 'Matches world articles')
+
+  // Careers
+  const careerMatches = testArticles.filter((a) => matchesCategoryFilter(a, 'careers'))
+  assert.ok(careerMatches.length > 0, 'Matches career articles')
+
+  // AI & Startups
+  const aiMatches = testArticles.filter((a) => matchesCategoryFilter(a, 'ai-startups'))
+  assert.ok(aiMatches.length > 0, 'Matches AI & Startups articles')
+
+  // Front Page (all)
+  const allMatches = testArticles.filter((a) => matchesCategoryFilter(a, null))
+  assert.equal(allMatches.length, testArticles.length, 'Front page returns all articles')
 })
