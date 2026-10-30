@@ -1,0 +1,180 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Article {
+  id           String   @id @default(uuid())
+  title        String
+  summary      String   @db.Text
+  content      String?  @db.Text
+  url          String   @unique
+  publisher    String
+  category     String
+  subcategory  String?
+  publishedAt  DateTime
+  imageUrl     String?  @db.Text
+  contentHash  String?
+  readingTime  Int      @default(2)
+  trending     Boolean  @default(false)
+  viewCount    Int      @default(0)
+  language     String   @default("en")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  clusters     ArticleClusterMember[]
+  bookmarks    Bookmark[]
+
+  @@index([category])
+  @@index([publishedAt])
+  @@index([trending])
+  @@index([language])
+}
+
+model Source {
+  id            String    @id @default(uuid())
+  name          String
+  feedUrl       String    @unique
+  category      String
+  subcategory   String?
+  sourceType    String    @default("RSS")
+  enabled       Boolean   @default(true)
+  lastFetchedAt DateTime?
+  createdAt     DateTime  @default(now())
+}
+
+model StoryCluster {
+  id             String                 @id @default(uuid())
+  canonicalTitle String
+  summary        String?                @db.Text
+  category       String?
+  createdAt      DateTime               @default(now())
+  updatedAt      DateTime               @updatedAt
+
+  members        ArticleClusterMember[]
+}
+
+model ArticleClusterMember {
+  id        String       @id @default(uuid())
+  articleId String
+  clusterId String
+  article   Article      @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  cluster   StoryCluster @relation(fields: [clusterId], references: [id], onDelete: Cascade)
+
+  @@unique([articleId, clusterId])
+}
+
+model User {
+  id             String            @id @default(uuid())
+  name           String
+  email          String            @unique
+  password       String?
+  role           String            @default("user")
+  city           String?
+  language       String            @default("en")
+  topics         String[]          @default([])
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @default(now()) @updatedAt
+  interests      UserInterest[]
+  bookmarks      Bookmark[]
+  communityPosts CommunityPost[]
+  comments       Comment[]
+  reactions      PostReaction[]
+  reports        CommunityReport[]
+}
+
+model CommunityPost {
+  id                String            @id @default(uuid())
+  title             String
+  description       String            @db.Text
+  city              String
+  locality          String?
+  category          String
+  eventDate         DateTime?
+  sourceUrl         String?
+  sourceExplanation String?           @db.Text
+  imageUrl          String?           @db.Text
+  disclaimerAgreed  Boolean           @default(true)
+  status            String            @default("pending")
+  verificationLevel String            @default("unverified")
+  authorId          String
+  author            User              @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  comments          Comment[]
+  reactions         PostReaction[]
+  reports           CommunityReport[]
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+
+  @@index([city])
+  @@index([category])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model Comment {
+  id        String        @id @default(uuid())
+  postId    String
+  authorId  String
+  content   String        @db.Text
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  post      CommunityPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  author    User          @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@index([postId])
+  @@index([authorId])
+}
+
+model PostReaction {
+  id        String        @id @default(uuid())
+  postId    String
+  userId    String?
+  guestId   String?
+  type      String        @default("upvote")
+  createdAt DateTime      @default(now())
+  post      CommunityPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user      User?         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([postId, userId])
+  @@index([postId])
+}
+
+model CommunityReport {
+  id         String        @id @default(uuid())
+  postId     String
+  reporterId String?
+  reason     String
+  details    String?       @db.Text
+  createdAt  DateTime      @default(now())
+  post       CommunityPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  reporter   User?         @relation(fields: [reporterId], references: [id], onDelete: SetNull)
+
+  @@index([postId])
+}
+
+model UserInterest {
+  id       String @id @default(uuid())
+  userId   String
+  category String
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, category])
+}
+
+model Bookmark {
+  id             String   @id @default(uuid())
+  userId         String?
+  guestSessionId String?
+  articleId      String
+  createdAt      DateTime @default(now())
+  article        Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  user           User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, articleId])
+  @@index([guestSessionId])
+  @@index([userId])
+}

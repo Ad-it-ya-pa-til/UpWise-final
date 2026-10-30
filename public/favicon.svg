@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none">
+  <!-- Compass Outer Ring -->
+  <circle cx="16" cy="16" r="14.25" stroke="#0F172A" stroke-width="1.5" stroke-opacity="0.2" />
+  
+  <!-- Editorial Column Lines (Newspaper) -->
+  <line x1="7" y1="12" x2="11.5" y2="12" stroke="#64748B" stroke-width="1.25" stroke-linecap="round" />
+  <line x1="20.5" y1="12" x2="25" y2="12" stroke="#64748B" stroke-width="1.25" stroke-linecap="round" />
+  <line x1="7" y1="20" x2="11.5" y2="20" stroke="#64748B" stroke-width="1.25" stroke-linecap="round" />
+  <line x1="20.5" y1="20" x2="25" y2="20" stroke="#64748B" stroke-width="1.25" stroke-linecap="round" />
+
+  <!-- Cardinal Direction Ticks (Compass) -->
+  <line x1="16" y1="1.75" x2="16" y2="4.5" stroke="#0F172A" stroke-width="1.75" stroke-linecap="round" />
+  <line x1="16" y1="27.5" x2="16" y2="30.25" stroke="#0F172A" stroke-width="1.75" stroke-linecap="round" />
+  <line x1="1.75" y1="16" x2="4.5" y2="16" stroke="#0F172A" stroke-width="1.75" stroke-linecap="round" />
+  <line x1="27.5" y1="16" x2="30.25" y2="16" stroke="#0F172A" stroke-width="1.75" stroke-linecap="round" />
+
+  <!-- Faceted Compass Needle (North Pointer - Indigo) -->
+  <polygon points="16,4.5 11.5,16 16,16" fill="#4F46E5" />
+  <polygon points="16,4.5 20.5,16 16,16" fill="#6366F1" />
+
+  <!-- Faceted Compass Needle (South Pointer - Obsidian / Slate) -->
+  <polygon points="16,27.5 11.5,16 16,16" fill="#0F172A" />
+  <polygon points="16,27.5 20.5,16 16,16" fill="#334155" />
+
+  <!-- Center Pivot -->
+  <circle cx="16" cy="16" r="3" fill="#FFFFFF" stroke="#0F172A" stroke-width="1.25" />
+  <circle cx="16" cy="16" r="1.2" fill="#4F46E5" />
+</svg>
