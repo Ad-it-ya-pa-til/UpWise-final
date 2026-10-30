@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import React, { useState, useEffect, useMemo, Suspense } from 'react'
 import {
   Globe,
@@ -101,6 +102,7 @@ export const NewsGlobeHub: React.FC<NewsGlobeHubProps> = ({
   onToggleSave,
   savedArticleIds = [],
 }) => {
+  const { t } = useTranslation()
   const [selectedLocationId, setSelectedLocationId] = useState<string>('india')
   const [mapMode, setMapMode] = useState<'india' | 'global'>('india')
   const [searchQuery, setSearchQuery] = useState('')

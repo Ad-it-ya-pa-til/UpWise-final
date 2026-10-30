@@ -20,6 +20,7 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
   onToggleSave,
   variant = 'standard',
 }) => {
+  const { t } = useTranslation();
   const [imageError, setImageError] = useState(false)
   const isHindi = language === 'hi'
   const displayTitle = isHindi && article.titleHi ? article.titleHi : article.title

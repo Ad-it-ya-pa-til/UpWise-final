@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import React, { useState, useEffect, useRef } from 'react'
 import {
   Monitor,
@@ -71,6 +72,7 @@ export const BriefingDesksSection: React.FC<BriefingDesksSectionProps> = ({
   articles = [],
   className = '',
 }) => {
+  const { t } = useTranslation()
   const [isPlayingAudio, setIsPlayingAudio] = useState(false)
   const [audioProgress, setAudioProgress] = useState(0)
   const synthRef = useRef<SpeechSynthesisUtterance | null>(null)

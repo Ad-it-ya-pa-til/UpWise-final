@@ -24,6 +24,7 @@ export const AccountMenu: React.FC<AccountMenuProps> = ({
   onNavigatePersonalize,
   className = '',
 }) => {
+  const { t } = useTranslation()
   const [isOpen, setIsOpen] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
 

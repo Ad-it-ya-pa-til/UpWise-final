@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import React, { useState, useEffect } from 'react'
 import {
   Filter,
@@ -73,6 +74,7 @@ export const NewsFeed: React.FC<NewsFeedProps> = ({
   onEditPreferences,
   onShareStory,
 }) => {
+  const { t } = useTranslation()
   const [visibleCount, setVisibleCount] = useState(8)
   const [isLoadingMore, setIsLoadingMore] = useState(false)
   const [showScrollTop, setShowScrollTop] = useState(false)

@@ -18,6 +18,7 @@ export const LeadStory: React.FC<LeadStoryProps> = ({
   isSaved = false,
   onToggleSave,
 }) => {
+  const { t } = useTranslation();
   const [imageError, setImageError] = useState(false)
   const isHindi = language === 'hi'
   const displayTitle = isHindi && article.titleHi ? article.titleHi : article.title

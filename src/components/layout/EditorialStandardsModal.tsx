@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import React, { useEffect } from 'react'
 import { X, ShieldCheck, FileText, Scale } from 'lucide-react'
 
@@ -14,6 +15,7 @@ export const EditorialStandardsModal: React.FC<EditorialStandardsModalProps> = (
   initialTab = 'charter',
   onClose,
 }) => {
+  const { t } = useTranslation()
   const [activeTab, setActiveTab] = React.useState<PolicyTab>(initialTab)
 
   useEffect(() => {

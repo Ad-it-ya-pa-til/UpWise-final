@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import React, { useState, useEffect } from 'react'
 import {
   X,
@@ -37,6 +38,7 @@ export const RewardsModal: React.FC<RewardsModalProps> = ({
   onBalanceUpdated,
   initialTab = 'store',
 }) => {
+  const { t } = useTranslation()
   const [activeTab, setActiveTab] = useState<'store' | 'my-coupons'>(initialTab)
   const [balance, setBalance] = useState<ClientBalanceInfo>({
     availableBalance: 0,

@@ -1,5 +1,6 @@
 import { LanguageMode } from '../types/news'
 
+export type LanguageMetadata = LanguageConfig;
 export interface LanguageConfig {
   code: LanguageMode
   name: string

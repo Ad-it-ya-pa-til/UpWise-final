@@ -107,6 +107,8 @@ export interface PersonalizeFeedOnboardingProps {
 }
 
 export const PersonalizeFeedOnboarding: React.FC<PersonalizeFeedOnboardingProps> = ({
+  // hook
+
   initialTopics = [],
   initialLanguage = 'en',
   userId,
@@ -114,6 +116,7 @@ export const PersonalizeFeedOnboarding: React.FC<PersonalizeFeedOnboardingProps>
   onCancelEdit,
   isEditing = false,
 }) => {
+  const { t } = useTranslation()
   const [selectedTopics, setSelectedTopics] = useState<string[]>(initialTopics)
   const [selectedLanguage, setSelectedLanguage] = useState<LanguageMode>(initialLanguage)
   const [isSaving, setIsSaving] = useState(false)

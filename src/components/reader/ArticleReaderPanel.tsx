@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import React, { useEffect, useState } from 'react'
 import {
   X,
@@ -27,6 +28,7 @@ export const ArticleReaderPanel: React.FC<ArticleReaderPanelProps> = ({
   isSaved = false,
   onToggleSave,
 }) => {
+  const { t } = useTranslation()
   const [imageError, setImageError] = useState(false)
   const [copied, setCopied] = useState(false)
 
