@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { User, LogOut, Bookmark, SlidersHorizontal, ChevronDown, Sparkles, Award } from 'lucide-react'
 import { UserProfile } from '../../types/navigation'
 
@@ -172,7 +173,7 @@ export const AccountMenu: React.FC<AccountMenuProps> = ({
               className="w-full text-left px-3 py-2 text-[#C14B29] hover:bg-[#FBF2EF] flex items-center gap-2 transition-colors font-medium"
             >
               <LogOut className="w-3.5 h-3.5" />
-              <span>Sign Out</span>
+              <span>{t('auth.signOut', 'Sign Out')}</span>
             </button>
           </div>
         </div>

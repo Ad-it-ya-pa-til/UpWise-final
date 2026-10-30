@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Bookmark, Clock, ArrowRight, ExternalLink, MapPin } from 'lucide-react'
 import { Article, LanguageMode } from '../../types/news'
 
@@ -106,7 +107,7 @@ export const LeadStory: React.FC<LeadStoryProps> = ({
                   type="button"
                   onClick={(e) => onToggleSave(article.id, e)}
                   aria-label={isSaved ? 'Remove bookmark' : 'Bookmark story'}
-                  title={isSaved ? 'Story Bookmarked' : 'Bookmark Story'}
+                  title={isSaved ? t('common.storyBookmarked', 'Story Bookmarked') : t('common.bookmarkStory', 'Bookmark story')}
                   className={`p-2 rounded-full border transition-all ${
                     isSaved
                       ? 'text-[#D95D39] bg-[#FBF2EF] border-[#F3D5CC]'

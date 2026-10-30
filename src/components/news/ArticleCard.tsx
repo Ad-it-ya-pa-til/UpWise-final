@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Bookmark, Clock, ExternalLink, Layers } from 'lucide-react'
 import { Article, LanguageMode } from '../../types/news'
 
@@ -108,7 +109,7 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
                 title={`Multi-source story covered across ${article.cluster.sourceCount} verified newsrooms`}
               >
                 <Layers className="w-2.5 h-2.5 stroke-[2]" />
-                <span>{article.cluster.sourceCount} sources</span>
+                <span>{t('common.sourcesCount', '{{count}} sources', { count: article.cluster.sourceCount })}</span>
               </span>
             )}
           </div>
@@ -130,8 +131,8 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
               <button
                 type="button"
                 onClick={(e) => onToggleSave(article.id, e)}
-                aria-label={isSaved ? 'Remove bookmark' : 'Bookmark story'}
-                title={isSaved ? 'Story Bookmarked' : 'Bookmark Story'}
+                aria-label={isSaved ? t('common.removeBookmark', 'Remove bookmark') : t('common.bookmarkStory', 'Bookmark story')}
+                title={isSaved ? t('common.storyBookmarked', 'Story Bookmarked') : t('common.bookmarkStory', 'Bookmark story')}
                 className={`p-1 rounded transition-colors ${
                   isSaved ? 'text-[#D95D39] bg-[#FBF2EF]' : 'text-[#78716C] hover:text-[#141412] hover:bg-black/5'
                 }`}

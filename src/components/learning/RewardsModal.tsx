@@ -221,7 +221,7 @@ export const RewardsModal: React.FC<RewardsModalProps> = ({
               }`}
           >
             <Ticket className="w-4 h-4" />
-            <span>My Coupons</span>
+            <span>{t('rewards.myCoupons', 'My Coupons')}</span>
             {myCoupons.length > 0 && (
               <span className="ml-1 px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-[#D95D39] text-white">
                 {myCoupons.length}

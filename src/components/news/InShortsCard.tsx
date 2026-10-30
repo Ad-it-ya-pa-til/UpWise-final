@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Bookmark, Share2, ExternalLink, ArrowRight, CheckCircle2, Newspaper } from 'lucide-react'
 import { Article, LanguageMode } from '../../types/news'
 
