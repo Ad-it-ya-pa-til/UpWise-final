@@ -23,6 +23,12 @@ model Article {
   trending     Boolean  @default(false)
   viewCount    Int      @default(0)
   language     String   @default("en")
+  latitude     Float?
+  longitude    Float?
+  location     String?
+  city         String?
+  state        String?
+  country      String?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
@@ -33,6 +39,10 @@ model Article {
   @@index([publishedAt])
   @@index([trending])
   @@index([language])
+  @@index([city])
+  @@index([state])
+  @@index([country])
+  @@index([latitude, longitude])
 }
 
 model Source {

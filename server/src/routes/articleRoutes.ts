@@ -4,6 +4,7 @@ import {
   getArticleById,
   getTrendingArticles,
   getAvailablePublishers,
+  getMapArticles,
   CATEGORIES_DATA,
 } from '../services/articleService.js';
 import { refreshAllFeeds } from '../ingestion/ingestionService.js';
@@ -83,6 +84,45 @@ router.get('/articles', optionalAuth, async (req: Request, res: Response) => {
       limit: limit ? parseInt(limit as string, 10) : 12,
       trendingOnly: trendingOnly === 'true',
       language: language as 'en' | 'hi' | 'all' | undefined,
+    });
+
+    res.json({ success: true, ...result });
+  } catch (error) {
+    res.status(500).json({ success: false, error: (error as Error).message });
+  }
+});
+
+/**
+ * GET /api/articles/map
+ * Retrieve geographic news articles with verified coordinates.
+ * Supports bounding box, location filter, combined topic+location queries, category, language, dateRange, and limits.
+ */
+router.get('/articles/map', async (req: Request, res: Response) => {
+  try {
+    const {
+      bbox,
+      location,
+      q,
+      category,
+      language,
+      dateRange,
+      startDate,
+      endDate,
+      sort,
+      limit,
+    } = req.query;
+
+    const result = await getMapArticles({
+      bbox: bbox as string,
+      location: location as string,
+      q: q as string,
+      category: category as string,
+      language: language as 'en' | 'hi' | 'all' | undefined,
+      dateRange: dateRange as 'today' | 'yesterday' | '7d' | '30d' | 'custom' | undefined,
+      startDate: startDate as string,
+      endDate: endDate as string,
+      sort: sort as 'latest' | 'oldest' | 'relevant' | undefined,
+      limit: limit ? parseInt(limit as string, 10) : 100,
     });
 
     res.json({ success: true, ...result });

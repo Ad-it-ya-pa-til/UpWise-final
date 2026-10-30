@@ -47,6 +47,21 @@ export const SUPPORTED_LOCATIONS: LocationDefinition[] = [
   // India - Northern States & Union Territories
   // ---------------------------------------------------------
   {
+    id: 'india',
+    name: 'All India',
+    displayName: 'All India News Desks',
+    heading: 'National Overview: All India News',
+    tagline: 'Comprehensive coverage across Northern Desks, Southern Hubs, and National Affairs.',
+    type: 'country',
+    country: 'India',
+    countryCode: 'IN',
+    coordinates: [22.5937, 78.9629],
+    mapView: 'india',
+    svgCoords: { x: 50, y: 50 },
+    aliases: ['india', 'all india', 'bharat', 'national', 'all desks', 'all'],
+    isMajorHub: true,
+  },
+  {
     id: 'punjab',
     name: 'Punjab',
     displayName: 'Punjab',

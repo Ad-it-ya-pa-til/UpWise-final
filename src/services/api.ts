@@ -184,7 +184,18 @@ export function mapBackendArticleToFrontend(item: any): Article {
     originalUrl: item.url || '#',
     isLead: Boolean(item.isLead),
     isTrending: Boolean(item.trending),
-    location: item.location,
+    location: (item.location && typeof item.location === 'object')
+      ? item.location
+      : (item.latitude != null && item.longitude != null)
+      ? {
+          country: item.country || 'India',
+          city: item.city || undefined,
+          state: item.state || undefined,
+          region: item.state || item.city,
+          coordinates: [item.latitude, item.longitude],
+          locationType: 'about',
+        }
+      : undefined,
     cluster,
   }
 }
@@ -470,6 +481,226 @@ export async function fetchArticlesByLocation(
     location,
   }
 }
+
+// ----------------------------------------------------------------------
+// Geographic Interactive Satellite Map Service
+// ----------------------------------------------------------------------
+
+export interface FetchMapArticlesParams {
+  bbox?: [number, number, number, number] // [minLng, minLat, maxLng, maxLat]
+  locationId?: string
+  location?: string
+  q?: string
+  category?: string
+  language?: LanguageMode | string
+  dateRange?: string
+  startDate?: string
+  endDate?: string
+  sort?: 'latest' | 'oldest' | 'relevant'
+  limit?: number
+}
+
+export async function fetchMapArticles(
+  params: FetchMapArticlesParams
+): Promise<{
+  articles: Article[]
+  total: number
+  centerLocation?: {
+    name: string
+    latitude: number
+    longitude: number
+  }
+  queryMeta?: {
+    topic?: string
+    location?: string
+  }
+}> {
+  // 1. Try real backend request if in browser environment
+  if (typeof window !== 'undefined') {
+    try {
+      const qParams = new URLSearchParams()
+      if (params.bbox) qParams.set('bbox', params.bbox.join(','))
+      if (params.locationId && params.locationId !== 'all' && params.locationId !== 'global') {
+        qParams.set('location', params.locationId)
+      } else if (params.location && params.location !== 'all' && params.location !== 'global') {
+        qParams.set('location', params.location)
+      }
+      if (params.q && params.q.trim()) qParams.set('q', params.q.trim())
+      if (params.category && params.category !== 'all' && params.category !== 'All') {
+        const catInfo = CATEGORY_MAP[params.category.toLowerCase()]
+        qParams.set('category', catInfo ? catInfo.name : params.category)
+      }
+      if (params.language && params.language !== 'all') qParams.set('language', params.language)
+      if (params.dateRange && params.dateRange !== 'all') {
+        const dateMapping: Record<string, string> = {
+          today: 'today',
+          yesterday: 'yesterday',
+          week: '7d',
+          month: '30d',
+          custom: 'custom',
+        }
+        qParams.set('dateRange', dateMapping[params.dateRange] || params.dateRange)
+      }
+      if (params.startDate) qParams.set('startDate', params.startDate)
+      if (params.endDate) qParams.set('endDate', params.endDate)
+      if (params.sort) qParams.set('sort', params.sort)
+      if (params.limit) qParams.set('limit', String(params.limit))
+
+      const res = await fetch(`/api/articles/map?${qParams.toString()}`, {
+        headers: defaultHeaders(),
+      })
+
+      if (res.ok) {
+        const json = await res.json()
+        if (json.success && Array.isArray(json.data) && json.data.length > 0) {
+          const mappedArticles = json.data.map(mapBackendArticleToFrontend)
+          return {
+            articles: mappedArticles,
+            total: json.total || mappedArticles.length,
+            centerLocation: json.centerLocation,
+            queryMeta: json.queryMeta,
+          }
+        }
+      }
+    } catch {
+      // Backend not reached or offline; fall through to local dataset fallback
+    }
+  }
+
+  // 2. Client-side fallback engine using NEWS_ARTICLES
+  await new Promise((resolve) => setTimeout(resolve, 50))
+
+  let pool = [...NEWS_ARTICLES].filter((a) => a.location && a.location.coordinates)
+
+  // Bounding box filter
+  if (params.bbox) {
+    const [minLng, minLat, maxLng, maxLat] = params.bbox
+    pool = pool.filter((a) => {
+      const coords = a.location?.coordinates
+      if (!coords) return false
+      const [lat, lng] = coords
+      return lat >= minLat && lat <= maxLat && lng >= minLng && lng <= maxLng
+    })
+  }
+
+  // Location filter
+  let centerLocation: { name: string; latitude: number; longitude: number } | undefined
+  const locId = params.locationId || params.location
+  if (locId && locId !== 'all' && locId !== 'global') {
+    const targetLoc = getLocationById(locId)
+    if (targetLoc) {
+      centerLocation = {
+        name: targetLoc.displayName,
+        latitude: targetLoc.coordinates[0],
+        longitude: targetLoc.coordinates[1],
+      }
+      const aliases = targetLoc.aliases.map((al) => al.toLowerCase())
+      pool = pool.filter((a) => {
+        const loc = a.location
+        if (!loc) return false
+        if (targetLoc.state && loc.state && loc.state.toLowerCase() === targetLoc.state.toLowerCase()) return true
+        if (targetLoc.city && loc.city && loc.city.toLowerCase() === targetLoc.city.toLowerCase()) return true
+        if (targetLoc.country && loc.country && loc.country.toLowerCase() === targetLoc.country.toLowerCase()) return true
+        const text = `${a.title} ${a.summary} ${(a.content || []).join(' ')}`.toLowerCase()
+        return aliases.some((al) => text.includes(al))
+      })
+    }
+  }
+
+  // Search query (combined topic + location)
+  let queryTopic: string | undefined
+  let queryLoc: string | undefined
+  if (params.q && params.q.trim()) {
+    const q = params.q.trim().toLowerCase()
+    const prepMatch = q.match(/^(.*?)\s+(?:in|from|at|near)\s+(.+)$/i)
+    if (prepMatch) {
+      queryTopic = prepMatch[1].trim()
+      queryLoc = prepMatch[2].trim()
+    } else {
+      queryTopic = q
+    }
+
+    if (queryLoc && queryTopic) {
+      const both = pool.filter((a) => {
+        const locText = `${a.location?.city || ''} ${a.location?.state || ''} ${a.location?.country || ''} ${a.title}`.toLowerCase()
+        const topicText = `${a.title} ${a.summary} ${a.source.name} ${(a.content || []).join(' ')}`.toLowerCase()
+        return locText.includes(queryLoc!) && topicText.includes(queryTopic!)
+      })
+      if (both.length > 0) {
+        pool = both
+      } else {
+        const locMatches = pool.filter((a) => {
+          const locText = `${a.location?.city || ''} ${a.location?.state || ''} ${a.location?.country || ''} ${a.title}`.toLowerCase()
+          return locText.includes(queryLoc!)
+        })
+        pool = locMatches.length > 0 ? locMatches : pool.filter((a) => {
+          const topicText = `${a.title} ${a.summary} ${a.source.name} ${(a.content || []).join(' ')}`.toLowerCase()
+          return topicText.includes(queryTopic!)
+        })
+      }
+    } else if (queryLoc) {
+      pool = pool.filter((a) => {
+        const text = `${a.location?.city || ''} ${a.location?.state || ''} ${a.location?.country || ''} ${a.title}`.toLowerCase()
+        return text.includes(queryLoc!)
+      })
+    } else if (queryTopic) {
+      pool = pool.filter((a) => {
+        const text = `${a.title} ${a.summary} ${a.source.name} ${(a.content || []).join(' ')}`.toLowerCase()
+        return text.includes(queryTopic!)
+      })
+    }
+  }
+
+  // Category filter
+  if (params.category && params.category !== 'all' && params.category !== 'All') {
+    const catLower = params.category.toLowerCase()
+    pool = pool.filter((a) => {
+      const catId = a.categoryId.toLowerCase()
+      const catName = a.categoryName.toLowerCase()
+      return catId === catLower || catName.includes(catLower)
+    })
+  }
+
+  // Language filter
+  if (params.language && params.language !== 'all') {
+    if (params.language === 'hi') {
+      pool = pool.filter((a) => Boolean(a.titleHi && a.summaryHi))
+    }
+  }
+
+  // Date range filter
+  if (params.dateRange && params.dateRange !== 'all') {
+    pool = pool.filter((a) =>
+      matchDatePreset(
+        a.publishedDate || a.publishedAt,
+        params.dateRange as any,
+        params.startDate,
+        params.endDate
+      )
+    )
+  }
+
+  // Sorting
+  if (params.sort === 'oldest') {
+    pool.sort((a, b) => (a.publishedDate > b.publishedDate ? 1 : -1))
+  } else {
+    pool.sort((a, b) => (a.publishedDate < b.publishedDate ? 1 : -1))
+  }
+
+  const limit = params.limit || 50
+  const finalArticles = pool.slice(0, limit)
+
+  return {
+    articles: finalArticles,
+    total: finalArticles.length,
+    centerLocation,
+    queryMeta: {
+      topic: queryTopic,
+      location: queryLoc,
+    },
+  }
+}
+
 
 // ----------------------------------------------------------------------
 // Authentication Service (Real Express Backend Integration)

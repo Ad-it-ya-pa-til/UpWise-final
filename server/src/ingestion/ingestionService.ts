@@ -3,6 +3,7 @@ import { FEED_SOURCES } from './feedConfig.js';
 import { fetchFeedItems } from './rssParser.js';
 import { clusterNewArticle, runClusteringBatch } from './clustering.js';
 import { SEED_ARTICLES } from './seedData.js';
+import { extractArticleLocation } from '../services/geoService.js';
 import crypto from 'crypto';
 
 export async function seedInitialArticles(): Promise<number> {
@@ -18,6 +19,17 @@ export async function seedInitialArticles(): Promise<number> {
   for (const item of SEED_ARTICLES) {
     const hashSource = `${item.title.toLowerCase().trim()}_${item.publisher}`;
     const contentHash = crypto.createHash('sha256').update(hashSource).digest('hex');
+
+    const geo = (item.latitude && item.longitude)
+      ? {
+          latitude: item.latitude,
+          longitude: item.longitude,
+          location: item.location || item.city || item.state || item.country || 'Verified Location',
+          city: item.city,
+          state: item.state,
+          country: item.country || 'India',
+        }
+      : extractArticleLocation(item.title, item.summary, item.content);
 
     try {
       await prisma.article.create({
@@ -35,6 +47,12 @@ export async function seedInitialArticles(): Promise<number> {
           readingTime: item.readingTime,
           trending: item.trending,
           language: item.language || 'en',
+          latitude: geo?.latitude || null,
+          longitude: geo?.longitude || null,
+          location: geo?.location || null,
+          city: geo?.city || null,
+          state: geo?.state || null,
+          country: geo?.country || null,
         },
       });
       inserted++;
@@ -90,6 +108,8 @@ export async function refreshAllFeeds(): Promise<{ fetched: number; inserted: nu
                 ? item.publishedAt
                 : new Date();
 
+            const geo = extractArticleLocation(item.title, item.summary, item.content || undefined);
+
             const created = await prisma.article.create({
               data: {
                 title: item.title,
@@ -105,6 +125,12 @@ export async function refreshAllFeeds(): Promise<{ fetched: number; inserted: nu
                 readingTime: item.readingTime,
                 trending: Math.random() > 0.75, // mark some live stories as trending
                 language: item.language || 'en',
+                latitude: geo?.latitude || null,
+                longitude: geo?.longitude || null,
+                location: geo?.location || null,
+                city: geo?.city || null,
+                state: geo?.state || null,
+                country: geo?.country || null,
               },
             });
             totalInserted++;

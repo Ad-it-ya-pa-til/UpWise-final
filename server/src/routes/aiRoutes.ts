@@ -25,7 +25,7 @@ router.post('/chat', aiRateLimiter, async (req: Request, res: Response) => {
       history,
     });
 
-    res.json({ success: true, ...result });
+    res.json(result);
   } catch (error) {
     res.status(500).json({ success: false, error: (error as Error).message });
   }
@@ -46,7 +46,7 @@ router.post('/evidence-lens', aiRateLimiter, async (req: Request, res: Response)
       language,
     });
 
-    res.json({ success: true, ...result });
+    res.json(result);
   } catch (error) {
     res.status(500).json({ success: false, error: (error as Error).message });
   }
