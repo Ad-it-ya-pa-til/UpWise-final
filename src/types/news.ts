@@ -1,67 +1,64 @@
-export interface ArticleAuthor {
-  name: string
-  role?: string
-  avatar?: string
+export interface ArticleLocation {
+  city?: string
+  state?: string
+  country?: string
+  countryCode?: string
+  coordinates?: [number, number] // [lat, lng]
+  locationId?: string
 }
 
 export interface ArticleSource {
-  name: string
-  verified: boolean
-  url?: string
-}
-
-export interface ArticleLocation {
-  country: string
-  countryCode?: string
-  state?: string
-  city?: string
-  region?: string
-  coordinates?: [number, number] // [lat, lng]
-  locationType?: 'about' | 'publisher' | 'regional'
-}
-
-export interface ArticleClusterMemberItem {
   id: string
-  title: string
-  publisher: string
-  url: string
-  publishedAt?: string
-  imageUrl?: string
+  name: string
+  category: string
+  url?: string
 }
 
 export interface ArticleCluster {
   id: string
-  canonicalTitle: string
-  sourceCount: number
-  members: ArticleClusterMemberItem[]
+  title: string
+  category: string
+  primaryLocation?: string
+  articleCount: number
+  primaryArticleId?: string
+  timeline?: Array<{
+    date: string
+    title: string
+    source: string
+  }>
+  coverageTimeline?: Array<{
+    date: string
+    title: string
+    source: string
+    url?: string
+  }>
+  perspectives?: Array<{
+    source: string
+    stance: string
+    summary: string
+  }>
 }
 
 export interface Article {
   id: string
   title: string
-  titleHi?: string
-  deck?: string
-  deckHi?: string
   summary: string
-  summaryHi?: string
-  content: string[]
-  contentHi?: string[]
-  keyTakeaways?: string[]
-  keyTakeawaysHi?: string[]
-  categoryId: string
-  categoryName: string
-  subcategoryId?: string
-  subcategoryName?: string
-  source: ArticleSource
-  author: ArticleAuthor
+  fullContent?: string
   publishedAt: string
-  publishedDate: string
-  readTime: string
-  imageUrl: string
-  imageCaption?: string
-  originalUrl: string
-  isLead?: boolean
-  isTrending?: boolean
+  publishedDate?: string
+  source: ArticleSource
+  categoryName: string
+  categoryId?: string
+  subcategoryId?: string
+  url?: string
+  originalUrl?: string
+  imageUrl?: string
+  readTimeMinutes?: number
+  isSaved?: boolean
+  evidenceStatus?: 'verified' | 'unverified' | 'disputed'
+  isFactCheck?: boolean
+  keyTakeaways?: string[]
+  language?: string
   location?: ArticleLocation
   cluster?: ArticleCluster
 }

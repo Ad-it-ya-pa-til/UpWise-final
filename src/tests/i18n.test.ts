@@ -27,3 +27,4 @@ test('Multilingual Architecture: Native scripts and labels are populated', () =>
     assert.ok(lang.script.length > 0, `Language ${lang.code} must specify a script`)
   }
 })
+
