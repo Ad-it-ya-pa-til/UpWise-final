@@ -9,6 +9,16 @@ import crypto from 'crypto';
 let schedulerTimer: NodeJS.Timeout | null = null;
 let isRefreshing = false;
 
+export function sanitizeTextForDb(text?: string | null): string {
+  if (!text) return '';
+  return text
+    .replace(/\u20B9/g, 'Rs. ')
+    .replace(/[\u2018\u2019]/g, "'")
+    .replace(/[\u201C\u201D]/g, '"')
+    .replace(/[\u2013\u2014]/g, '-')
+    .replace(/\u2026/g, '...');
+}
+
 export async function seedInitialArticles(): Promise<number> {
   const count = await prisma.article.count();
   if (count > 0) {
@@ -66,18 +76,22 @@ export async function seedInitialArticles(): Promise<number> {
 
   // Also seed Sources
   for (const src of FEED_SOURCES) {
-    await prisma.source.upsert({
-      where: { feedUrl: src.feedUrl },
-      update: { name: src.name, category: src.category, subcategory: src.subcategory },
-      create: {
-        name: src.name,
-        feedUrl: src.feedUrl,
-        category: src.category,
-        subcategory: src.subcategory,
-        sourceType: 'RSS',
-        enabled: true,
-      },
-    });
+    try {
+      await prisma.source.upsert({
+        where: { feedUrl: src.feedUrl },
+        update: { name: src.name, category: src.category, subcategory: src.subcategory },
+        create: {
+          name: src.name,
+          feedUrl: src.feedUrl,
+          category: src.category,
+          subcategory: src.subcategory,
+          sourceType: 'RSS',
+          enabled: true,
+        },
+      });
+    } catch (e) {
+      console.warn(`[Seed] Source upsert skipped for ${src.name}:`, (e as Error).message);
+    }
   }
 
   // Run clustering across seeded items
@@ -138,11 +152,15 @@ export async function refreshAllFeeds(): Promise<{ fetched: number; inserted: nu
             // Extract real-world geographic coordinates
             const geo = extractArticleLocation(item.title, item.summary, item.content || undefined);
 
+            const sanitizedTitle = sanitizeTextForDb(item.title);
+            const sanitizedSummary = sanitizeTextForDb(item.summary);
+            const sanitizedContent = sanitizeTextForDb(item.content);
+
             const created = await prisma.article.create({
               data: {
-                title: item.title,
-                summary: item.summary,
-                content: item.content,
+                title: sanitizedTitle,
+                summary: sanitizedSummary,
+                content: sanitizedContent || null,
                 url: item.url,
                 publisher: item.publisher,
                 category: item.category,
@@ -173,19 +191,23 @@ export async function refreshAllFeeds(): Promise<{ fetched: number; inserted: nu
         }
 
         // Update Source tracking record
-        await prisma.source.upsert({
-          where: { feedUrl: source.feedUrl },
-          update: { lastFetchedAt: new Date(), enabled: true },
-          create: {
-            name: source.name,
-            feedUrl: source.feedUrl,
-            category: source.category,
-            subcategory: source.subcategory,
-            sourceType: 'RSS',
-            enabled: true,
-            lastFetchedAt: new Date(),
-          },
-        });
+        try {
+          await prisma.source.upsert({
+            where: { feedUrl: source.feedUrl },
+            update: { lastFetchedAt: new Date(), enabled: true },
+            create: {
+              name: source.name,
+              feedUrl: source.feedUrl,
+              category: source.category,
+              subcategory: source.subcategory,
+              sourceType: 'RSS',
+              enabled: true,
+              lastFetchedAt: new Date(),
+            },
+          });
+        } catch (srcErr) {
+          console.warn(`[Ingestion] Source tracking update skipped for ${source.name}:`, (srcErr as Error).message);
+        }
       } catch (err) {
         errorCount++;
         console.error(`[Ingestion] Source error for ${source.name} (${source.feedUrl}):`, (err as Error).message);
