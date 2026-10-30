@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   Cpu,
   Landmark,
@@ -172,10 +173,10 @@ export const PersonalizeFeedOnboarding: React.FC<PersonalizeFeedOnboardingProps>
         <div className="text-center max-w-xl mx-auto mb-8">
           <div className="w-7 h-[3px] bg-[#D95D39] rounded-full mx-auto mb-3" />
           <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-[#141412] tracking-tight leading-tight mb-3">
-            Select Your Reporting Desks
+            {t('onboarding.title', 'Select Your Reporting Desks')}
           </h1>
           <p className="text-xs sm:text-sm text-[#55504A] leading-relaxed">
-            Choose the sections and language edition that define your daily newspaper feed.
+            {t('onboarding.subtitle', 'Choose the sections and language edition that define your daily newspaper feed.')}
           </p>
 
           {/* Language Selector */}
