@@ -24,7 +24,10 @@
     "technology": "Technology",
     "science": "Science",
     "sports": "Sports",
-    "culture": "Culture"
+    "culture": "Culture",
+    "indiaPolitics": "India & Politics",
+    "careers": "Careers",
+    "aiStartups": "AI & Startups"
   },
   "filters": {
     "language": "Language",
@@ -45,7 +48,22 @@
     "reset": "Reset",
     "layout": "Layout",
     "stack": "Stack",
-    "grid": "Grid"
+    "grid": "Grid",
+    "past7Days": "Past 7 Days",
+    "thisMonth": "This Month",
+    "allSources": "All Sources",
+    "sourcesCount": "Sources ({{count}})",
+    "filterPublishers": "Filter publishers...",
+    "selectAll": "Select all",
+    "clear": "Clear",
+    "noPublishersFound": "No publishers found",
+    "storiesCount": "{{count}} story",
+    "storiesCount_other": "{{count}} stories",
+    "frontPageLayout": "Front Page",
+    "digestLayout": "Digest",
+    "filteredBy": "Filtered:",
+    "savedStories": "Saved Stories",
+    "resetAll": "Reset all"
   },
   "feed": {
     "leadStory": "Lead Story",

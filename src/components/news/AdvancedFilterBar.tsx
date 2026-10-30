@@ -64,6 +64,7 @@ export const AdvancedFilterBar: React.FC<AdvancedFilterBarProps> = ({
   totalResultsCount,
   onResetAllFilters,
 }) => {
+  const { t } = useTranslation()
   const [isDateOpen, setIsDateOpen] = useState(false)
   const [isPublisherOpen, setIsPublisherOpen] = useState(false)
   const [publisherSearch, setPublisherSearch] = useState('')
@@ -177,11 +178,11 @@ export const AdvancedFilterBar: React.FC<AdvancedFilterBarProps> = ({
                 <div className="absolute left-0 top-full mt-1.5 w-60 bg-white border border-[#E8E2D8] rounded-lg shadow-popover z-50 p-2 text-xs animate-in fade-in-50 duration-150">
                   <div className="space-y-0.5">
                     {[
-                      { id: 'all', label: 'All Dates' },
-                      { id: 'today', label: 'Today' },
-                      { id: 'yesterday', label: 'Yesterday' },
-                      { id: 'week', label: 'Past 7 Days' },
-                      { id: 'month', label: 'This Month' },
+                      { id: 'all', key: 'filters.allDates', label: 'All Dates' },
+                      { id: 'today', key: 'filters.today', label: 'Today' },
+                      { id: 'yesterday', key: 'filters.yesterday', label: 'Yesterday' },
+                      { id: 'week', key: 'filters.past7Days', label: 'Past 7 Days' },
+                      { id: 'month', key: 'filters.thisMonth', label: 'This Month' },
                     ].map((opt) => (
                       <button
                         key={opt.id}
@@ -196,7 +197,7 @@ export const AdvancedFilterBar: React.FC<AdvancedFilterBarProps> = ({
                             : 'text-[#141412] hover:bg-[#FAF7F2]'
                         }`}
                       >
-                        <span>{opt.label}</span>
+                        <span>{t(opt.key, opt.label)}</span>
                         {datePreset === opt.id && <Check className="w-3 h-3 text-[#D95D39]" />}
                       </button>
                     ))}
@@ -204,11 +205,11 @@ export const AdvancedFilterBar: React.FC<AdvancedFilterBarProps> = ({
 
                   <div className="mt-2 pt-2 border-t border-[#E8E2D8]">
                     <div className="text-[11px] font-semibold text-[#141412] mb-1">
-                      Custom Range
+                      {t('filters.customRange', 'Custom Range')}
                     </div>
                     <div className="space-y-1">
                       <div>
-                        <label className="text-[10px] text-[#78716C] block">From</label>
+                        <label className="text-[10px] text-[#78716C] block">{t('filters.fromDate', 'From')}</label>
                         <input
                           type="date"
                           value={tempStart}
@@ -217,7 +218,7 @@ export const AdvancedFilterBar: React.FC<AdvancedFilterBarProps> = ({
                         />
                       </div>
                       <div>
-                        <label className="text-[10px] text-[#78716C] block">To</label>
+                        <label className="text-[10px] text-[#78716C] block">{t('filters.toDate', 'To')}</label>
                         <input
                           type="date"
                           value={tempEnd}
@@ -233,7 +234,7 @@ export const AdvancedFilterBar: React.FC<AdvancedFilterBarProps> = ({
                         onClick={handleApplyCustomDate}
                         className="w-full mt-1 px-2.5 py-1 bg-[#0F392B] text-white font-medium text-xs rounded hover:bg-[#184837] transition-colors"
                       >
-                        Apply Range
+                        {t('filters.apply', 'Apply Range')}
                       </button>
                     </div>
                   </div>
@@ -276,7 +277,7 @@ export const AdvancedFilterBar: React.FC<AdvancedFilterBarProps> = ({
                       type="text"
                       value={publisherSearch}
                       onChange={(e) => setPublisherSearch(e.target.value)}
-                      placeholder="Filter publishers..."
+                      placeholder={t('filters.filterPublishers', 'Filter publishers...')}
                       className="w-full bg-transparent text-xs text-[#141412] placeholder:text-[#78716C] focus:outline-none"
                     />
                   </div>
@@ -287,7 +288,7 @@ export const AdvancedFilterBar: React.FC<AdvancedFilterBarProps> = ({
                       onClick={onSelectAllPublishers}
                       className="hover:text-[#141412] transition-colors"
                     >
-                      Select all
+                      {t('filters.selectAll', 'Select all')}
                     </button>
                     <button
                       type="button"
@@ -300,7 +301,7 @@ export const AdvancedFilterBar: React.FC<AdvancedFilterBarProps> = ({
 
                   <div className="max-h-44 overflow-y-auto space-y-0.5 py-1">
                     {filteredPublishersList.length === 0 ? (
-                      <p className="text-[11px] text-[#78716C] text-center py-2">No publishers found</p>
+                      <p className="text-[11px] text-[#78716C] text-center py-2">{t('filters.noPublishersFound', 'No publishers found')}</p>
                     ) : (
                       filteredPublishersList.map((pub) => {
                         const isSelected = selectedPublishers.includes(pub)
@@ -329,7 +330,7 @@ export const AdvancedFilterBar: React.FC<AdvancedFilterBarProps> = ({
           {/* Right: Story Count & Layout Switcher */}
           <div className="flex items-center gap-2 sm:gap-3">
             <span className="text-[11px] font-normal text-[#78716C] hidden sm:inline">
-              {totalResultsCount} {totalResultsCount === 1 ? 'story' : 'stories'}
+              {t('filters.storiesCount', '{{count}} stories', { count: totalResultsCount })}
             </span>
 
             <div className="inline-flex p-0.5 bg-white border border-[#E8E2D8] rounded text-[11px] font-medium">
@@ -345,7 +346,7 @@ export const AdvancedFilterBar: React.FC<AdvancedFilterBarProps> = ({
                 }`}
               >
                 <LayoutGrid className="w-3 h-3" />
-                <span>Front Page</span>
+                <span>{t('filters.frontPageLayout', 'Front Page')}</span>
               </button>
 
               <button
@@ -360,7 +361,7 @@ export const AdvancedFilterBar: React.FC<AdvancedFilterBarProps> = ({
                 }`}
               >
                 <Layers className="w-3 h-3" />
-                <span>Digest</span>
+                <span>{t('filters.digestLayout', 'Digest')}</span>
               </button>
             </div>
           </div>
@@ -369,11 +370,11 @@ export const AdvancedFilterBar: React.FC<AdvancedFilterBarProps> = ({
         {/* Active Filter Chips (if any filter is on) */}
         {isAnyFilterActive && (
           <div className="flex flex-wrap items-center gap-1 pt-1 text-[11px]">
-            <span className="text-[#78716C] font-medium mr-1">Filtered:</span>
+            <span className="text-[#78716C] font-medium mr-1">{t('filters.filteredBy', 'Filtered:')}</span>
 
             {isSavedViewActive && (
               <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-[#FBF2EF] text-[#C84B31] border border-[#F0C9BF]">
-                Saved Stories
+                {t('filters.savedStories', 'Saved Stories')}
                 <button
                   type="button"
                   onClick={onClearSavedView}

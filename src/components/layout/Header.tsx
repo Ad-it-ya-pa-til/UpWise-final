@@ -298,7 +298,21 @@ export const Header: React.FC<HeaderProps> = ({
                       : 'text-[#55504A] hover:text-[#141412] font-medium'
                     }`}
                 >
-                  {sec.label}
+                  {(() => {
+                    const sectionKeyMap: Record<string, string> = {
+                      all: 'sections.frontPage',
+                      tech: 'sections.technology',
+                      politics: 'sections.indiaPolitics',
+                      business: 'sections.business',
+                      science: 'sections.science',
+                      sports: 'sections.sports',
+                      world: 'sections.world',
+                      career: 'sections.careers',
+                      ai: 'sections.aiStartups',
+                    };
+                    const translationKey = sectionKeyMap[sec.id] || `sections.${sec.id}`;
+                    return t(translationKey, sec.label);
+                  })()}
                 </button>
               )
             })}
