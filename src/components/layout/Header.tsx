@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { Bookmark, MessageSquare, Palette, Newspaper, Plus } from 'lucide-react'
+import { Bookmark, MessageSquare, Palette, Newspaper, Plus, Sparkles } from 'lucide-react'
 import { UpwiseLogo } from './UpwiseLogo'
 import { SearchWithCategoryBrowser } from './SearchWithCategoryBrowser'
 import { NotificationsPopover } from './NotificationsPopover'
@@ -29,6 +29,8 @@ export interface HeaderProps {
   onSelectDestination?: (dest: NavDestination) => void
   onOpenNewPost?: () => void
   feedToolbar?: React.ReactNode
+  upPoints?: number
+  onOpenRewards?: () => void
   className?: string
 }
 
@@ -66,6 +68,8 @@ export const Header: React.FC<HeaderProps> = ({
   onSelectDestination,
   onOpenNewPost,
   feedToolbar,
+  upPoints = 0,
+  onOpenRewards,
   className = '',
 }) => {
   const currentDateFormatted = useMemo(() => {
@@ -105,7 +109,7 @@ export const Header: React.FC<HeaderProps> = ({
       <div className="sticky top-0 z-50 border-b border-[#E8E2D8] bg-[#FAF7F2]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-14 gap-3 sm:gap-6">
-            
+
             {/* Left: Brand Wordmark */}
             <div className="flex items-center shrink-0">
               <button
@@ -142,46 +146,52 @@ export const Header: React.FC<HeaderProps> = ({
                   <button
                     type="button"
                     onClick={() => onSelectDestination('feed')}
-                    className={`px-2.5 py-1 rounded transition-colors ${
-                      activeDestination === 'feed'
+                    className={`px-2.5 py-1 rounded transition-colors ${activeDestination === 'feed'
                         ? 'bg-[#0F392B] text-white font-semibold'
                         : 'text-[#55504A] hover:text-[#141412]'
-                    }`}
+                      }`}
                   >
                     News
                   </button>
                   <button
                     type="button"
                     onClick={() => onSelectDestination('globe')}
-                    className={`px-2.5 py-1 rounded transition-colors flex items-center gap-1 ${
-                      activeDestination === 'globe'
+                    className={`px-2.5 py-1 rounded transition-colors flex items-center gap-1 ${activeDestination === 'globe'
                         ? 'bg-[#0F392B] text-white font-semibold'
                         : 'text-[#55504A] hover:text-[#141412]'
-                    }`}
+                      }`}
                   >
                     <span>Globe</span>
                   </button>
                   <button
                     type="button"
                     onClick={() => onSelectDestination('community')}
-                    className={`px-2.5 py-1 rounded transition-colors flex items-center gap-1 ${
-                      activeDestination === 'community'
+                    className={`px-2.5 py-1 rounded transition-colors flex items-center gap-1 ${activeDestination === 'community'
                         ? 'bg-[#0F392B] text-white font-semibold'
                         : 'text-[#55504A] hover:text-[#141412]'
-                    }`}
+                      }`}
                   >
                     <span>Community</span>
                   </button>
                   <button
                     type="button"
                     onClick={() => onSelectDestination('comics')}
-                    className={`px-2.5 py-1 rounded transition-colors ${
-                      activeDestination === 'comics'
+                    className={`px-2.5 py-1 rounded transition-colors ${activeDestination === 'comics'
                         ? 'bg-[#0F392B] text-white font-semibold'
                         : 'text-[#55504A] hover:text-[#141412]'
-                    }`}
+                      }`}
                   >
                     Cartoons
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => onSelectDestination('quiz')}
+                    className={`px-2.5 py-1 rounded transition-colors ${activeDestination === 'quiz'
+                        ? 'bg-[#0F392B] text-white font-semibold'
+                        : 'text-[#55504A] hover:text-[#141412]'
+                      }`}
+                  >
+                    Quiz & Cards
                   </button>
                 </div>
               )}
@@ -193,11 +203,10 @@ export const Header: React.FC<HeaderProps> = ({
                   onClick={onNavigateSaved}
                   aria-label={isSavedViewActive ? 'Exit saved stories' : 'View saved stories'}
                   title="Saved Stories"
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all border ${
-                    isSavedViewActive
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all border ${isSavedViewActive
                       ? 'bg-[#141412] text-white border-[#141412]'
                       : 'bg-white text-[#3A3732] hover:text-[#141412] hover:bg-[#FDFBF7] border-[#E8E2D8]'
-                  }`}
+                    }`}
                 >
                   <Bookmark className={`w-3.5 h-3.5 stroke-[1.75] ${isSavedViewActive ? 'fill-current' : ''}`} />
                   <span className="hidden sm:inline">Saved</span>
@@ -209,10 +218,25 @@ export const Header: React.FC<HeaderProps> = ({
                 </button>
               )}
 
+              {/* UP Points Rewards Pill Badge */}
+              {onOpenRewards && (
+                <button
+                  type="button"
+                  onClick={onOpenRewards}
+                  title="UP Points Rewards & Coupons"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-bold transition-all bg-[#0F392B] text-white hover:bg-[#184837] shadow-xs border border-[#0F392B]"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-[#D95D39] fill-[#D95D39]" />
+                  <span>✦ {upPoints} UP</span>
+                </button>
+              )}
+
               <NotificationsPopover />
 
               <AccountMenu
                 user={user}
+                upPoints={upPoints}
+                onOpenRewards={onOpenRewards}
                 onLoginClick={onLoginClick}
                 onSignOutClick={onSignOutClick}
                 onNavigateSaved={onNavigateSaved}
@@ -269,11 +293,10 @@ export const Header: React.FC<HeaderProps> = ({
                   key={sec.id}
                   type="button"
                   onClick={() => handleSectionClick(sec)}
-                  className={`px-1 py-1 text-xs sm:text-[13px] transition-all shrink-0 relative ${
-                    active
+                  className={`px-1 py-1 text-xs sm:text-[13px] transition-all shrink-0 relative ${active
                       ? 'text-[#141412] font-bold border-b-2 border-[#141412] pb-1.5 -mb-[9px]'
                       : 'text-[#55504A] hover:text-[#141412] font-medium'
-                  }`}
+                    }`}
                 >
                   {sec.label}
                 </button>

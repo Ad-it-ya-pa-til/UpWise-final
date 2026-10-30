@@ -1,9 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { User, LogOut, Bookmark, SlidersHorizontal, ChevronDown } from 'lucide-react'
+import { User, LogOut, Bookmark, SlidersHorizontal, ChevronDown, Sparkles, Award } from 'lucide-react'
 import { UserProfile } from '../../types/navigation'
 
 interface AccountMenuProps {
   user: UserProfile | null
+  upPoints?: number
+  onOpenRewards?: () => void
   onLoginClick?: () => void
   onSignOutClick?: () => void
   onNavigateSaved?: () => void
@@ -13,6 +15,8 @@ interface AccountMenuProps {
 
 export const AccountMenu: React.FC<AccountMenuProps> = ({
   user,
+  upPoints = 0,
+  onOpenRewards,
   onLoginClick,
   onSignOutClick,
   onNavigateSaved,
@@ -74,9 +78,8 @@ export const AccountMenu: React.FC<AccountMenuProps> = ({
           {user.name}
         </span>
         <ChevronDown
-          className={`w-3.5 h-3.5 text-[#78716C] transition-transform duration-150 ${
-            isOpen ? 'rotate-180' : ''
-          }`}
+          className={`w-3.5 h-3.5 text-[#78716C] transition-transform duration-150 ${isOpen ? 'rotate-180' : ''
+            }`}
         />
       </button>
 
@@ -85,12 +88,48 @@ export const AccountMenu: React.FC<AccountMenuProps> = ({
           role="menu"
           className="absolute right-0 top-full mt-1.5 w-56 bg-white border border-[#E8E2D8] rounded-lg shadow-popover z-50 py-1 text-xs animate-in fade-in duration-100 divide-y divide-[#E8E2D8]"
         >
-          <div className="px-3 py-2 bg-[#FAF7F2]">
-            <p className="font-semibold text-[#141412] truncate">{user.name}</p>
-            <p className="text-[11px] text-[#78716C] truncate mt-0.5">{user.email}</p>
+          <div className="px-3 py-2 bg-[#FAF7F2] flex items-center justify-between">
+            <div className="min-w-0">
+              <p className="font-semibold text-[#141412] truncate">{user.name}</p>
+              <p className="text-[11px] text-[#78716C] truncate mt-0.5">{user.email}</p>
+            </div>
+            {onOpenRewards && (
+              <button
+                type="button"
+                onClick={() => {
+                  setIsOpen(false)
+                  onOpenRewards()
+                }}
+                className="ml-2 px-2 py-1 rounded bg-[#0F392B] text-white text-[10px] font-bold shrink-0 hover:bg-[#184837] flex items-center gap-1 shadow-xs"
+                title="View UP Points Balance"
+              >
+                <Sparkles className="w-2.5 h-2.5 text-[#D95D39] fill-[#D95D39]" />
+                <span>{upPoints} UP</span>
+              </button>
+            )}
           </div>
 
           <div className="py-1">
+            {onOpenRewards && (
+              <button
+                type="button"
+                role="menuitem"
+                onClick={() => {
+                  setIsOpen(false)
+                  onOpenRewards()
+                }}
+                className="w-full text-left px-3 py-2 text-[#0F392B] hover:bg-[#E8F3EE] flex items-center justify-between transition-colors font-semibold"
+              >
+                <div className="flex items-center gap-2">
+                  <Award className="w-3.5 h-3.5 text-[#D95D39]" />
+                  <span>Rewards & Coupons</span>
+                </div>
+                <span className="text-[10px] font-bold bg-[#0F392B] text-white px-1.5 py-0.5 rounded">
+                  ✦ {upPoints} UP
+                </span>
+              </button>
+            )}
+
             {onNavigateSaved && (
               <button
                 type="button"

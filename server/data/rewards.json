@@ -1,0 +1,282 @@
+[
+  {
+    "id": "tx_1793360719313_071b4f",
+    "userId": null,
+    "guestSessionId": "test_guest_1793360719277",
+    "quizAttemptId": "test_att_1793360719299",
+    "points": 13,
+    "type": "QUIZ_COMPLETION",
+    "description": "Completed Quiz: Editorial Current Affairs Briefing (Last 7 Days) (4/5 correct)",
+    "createdAt": "2026-10-30T11:45:19.313Z"
+  },
+  {
+    "id": "seed_tx_1793360719393",
+    "guestSessionId": "test_guest_redeem_1793360719370",
+    "points": 120,
+    "type": "QUIZ_COMPLETION",
+    "description": "Manual seed for redemption test",
+    "createdAt": "2026-10-30T11:45:19.393Z"
+  },
+  {
+    "id": "tx_red_1793360719418_ed6150",
+    "userId": null,
+    "guestSessionId": "test_guest_redeem_1793360719370",
+    "quizAttemptId": null,
+    "points": -100,
+    "type": "COUPON_REDEMPTION",
+    "description": "Redeemed Coupon: ₹50 Off Student Books (KitabKhana & Academic Books)",
+    "createdAt": "2026-10-30T11:45:19.418Z"
+  },
+  {
+    "id": "tx_1793360794715_f93ef6",
+    "userId": null,
+    "guestSessionId": "test_guest_1793360794695",
+    "quizAttemptId": "test_att_1793360794706",
+    "points": 13,
+    "type": "QUIZ_COMPLETION",
+    "description": "Completed Quiz: Editorial Current Affairs Briefing (Last 7 Days) (4/5 correct)",
+    "createdAt": "2026-10-30T11:46:34.715Z"
+  },
+  {
+    "id": "seed_tx_1793360794744",
+    "guestSessionId": "test_guest_redeem_1793360794731",
+    "points": 120,
+    "type": "QUIZ_COMPLETION",
+    "description": "Manual seed for redemption test",
+    "createdAt": "2026-10-30T11:46:34.744Z"
+  },
+  {
+    "id": "tx_red_1793360794761_ef2227",
+    "userId": null,
+    "guestSessionId": "test_guest_redeem_1793360794731",
+    "quizAttemptId": null,
+    "points": -100,
+    "type": "COUPON_REDEMPTION",
+    "description": "Redeemed Coupon: ₹50 Off Student Books (KitabKhana & Academic Books)",
+    "createdAt": "2026-10-30T11:46:34.761Z"
+  },
+  {
+    "id": "tx_1793360812283_72c590",
+    "userId": null,
+    "guestSessionId": "test_guest_1793360812261",
+    "quizAttemptId": "test_att_1793360812278",
+    "points": 13,
+    "type": "QUIZ_COMPLETION",
+    "description": "Completed Quiz: Editorial Current Affairs Briefing (Last 7 Days) (4/5 correct)",
+    "createdAt": "2026-10-30T11:46:52.283Z"
+  },
+  {
+    "id": "seed_tx_1793360812330",
+    "guestSessionId": "test_guest_redeem_1793360812319",
+    "points": 120,
+    "type": "QUIZ_COMPLETION",
+    "description": "Manual seed for redemption test",
+    "createdAt": "2026-10-30T11:46:52.330Z"
+  },
+  {
+    "id": "tx_red_1793360812346_420c4b",
+    "userId": null,
+    "guestSessionId": "test_guest_redeem_1793360812319",
+    "quizAttemptId": null,
+    "points": -100,
+    "type": "COUPON_REDEMPTION",
+    "description": "Redeemed Coupon: ₹50 Off Student Books (KitabKhana & Academic Books)",
+    "createdAt": "2026-10-30T11:46:52.346Z"
+  },
+  {
+    "id": "tx_1793360821751_da12f8",
+    "userId": null,
+    "guestSessionId": "test_guest_1793360821740",
+    "quizAttemptId": "test_att_1793360821747",
+    "points": 13,
+    "type": "QUIZ_COMPLETION",
+    "description": "Completed Quiz: Editorial Current Affairs Briefing (Last 7 Days) (4/5 correct)",
+    "createdAt": "2026-10-30T11:47:01.751Z"
+  },
+  {
+    "id": "seed_tx_1793360821779",
+    "guestSessionId": "test_guest_redeem_1793360821770",
+    "points": 120,
+    "type": "QUIZ_COMPLETION",
+    "description": "Manual seed for redemption test",
+    "createdAt": "2026-10-30T11:47:01.779Z"
+  },
+  {
+    "id": "tx_red_1793360821790_9ba20a",
+    "userId": null,
+    "guestSessionId": "test_guest_redeem_1793360821770",
+    "quizAttemptId": null,
+    "points": -100,
+    "type": "COUPON_REDEMPTION",
+    "description": "Redeemed Coupon: ₹50 Off Student Books (KitabKhana & Academic Books)",
+    "createdAt": "2026-10-30T11:47:01.790Z"
+  },
+  {
+    "id": "tx_1793361325167_7e05ae",
+    "userId": null,
+    "guestSessionId": "test_guest_1793361325142",
+    "quizAttemptId": "test_att_1793361325159",
+    "points": 13,
+    "type": "QUIZ_COMPLETION",
+    "description": "Completed Quiz: Editorial Current Affairs Briefing (Last 7 Days) (4/5 correct)",
+    "createdAt": "2026-10-30T11:55:25.167Z"
+  },
+  {
+    "id": "seed_tx_1793361325217",
+    "guestSessionId": "test_guest_redeem_1793361325204",
+    "points": 120,
+    "type": "QUIZ_COMPLETION",
+    "description": "Manual seed for redemption test",
+    "createdAt": "2026-10-30T11:55:25.217Z"
+  },
+  {
+    "id": "tx_red_1793361325232_07d97b",
+    "userId": null,
+    "guestSessionId": "test_guest_redeem_1793361325204",
+    "quizAttemptId": null,
+    "points": -100,
+    "type": "COUPON_REDEMPTION",
+    "description": "Redeemed Coupon: ₹50 Off Student Books (KitabKhana & Academic Books)",
+    "createdAt": "2026-10-30T11:55:25.232Z"
+  },
+  {
+    "id": "tx_1793370853135_c68dcd",
+    "userId": null,
+    "guestSessionId": "test_guest_1793370853101",
+    "quizAttemptId": "test_att_1793370853129",
+    "points": 13,
+    "type": "QUIZ_COMPLETION",
+    "description": "Completed Quiz: Editorial Current Affairs Briefing (Last 7 Days) (4/5 correct)",
+    "createdAt": "2026-10-30T14:34:13.136Z"
+  },
+  {
+    "id": "seed_tx_1793370853174",
+    "guestSessionId": "test_guest_redeem_1793370853165",
+    "points": 120,
+    "type": "QUIZ_COMPLETION",
+    "description": "Manual seed for redemption test",
+    "createdAt": "2026-10-30T14:34:13.174Z"
+  },
+  {
+    "id": "tx_red_1793370853189_d9104b",
+    "userId": null,
+    "guestSessionId": "test_guest_redeem_1793370853165",
+    "quizAttemptId": null,
+    "points": -100,
+    "type": "COUPON_REDEMPTION",
+    "description": "Redeemed Coupon: ₹50 Off Student Books (KitabKhana & Academic Books)",
+    "createdAt": "2026-10-30T14:34:13.189Z"
+  },
+  {
+    "id": "tx_1793371471391_c92c08",
+    "userId": null,
+    "guestSessionId": "test_guest_1793371471352",
+    "quizAttemptId": "test_att_1793371471383",
+    "points": 13,
+    "type": "QUIZ_COMPLETION",
+    "description": "Completed Quiz: Editorial Current Affairs Briefing (Last 7 Days) (4/5 correct)",
+    "createdAt": "2026-10-30T14:44:31.391Z"
+  },
+  {
+    "id": "seed_tx_1793371471439",
+    "guestSessionId": "test_guest_redeem_1793371471427",
+    "points": 120,
+    "type": "QUIZ_COMPLETION",
+    "description": "Manual seed for redemption test",
+    "createdAt": "2026-10-30T14:44:31.439Z"
+  },
+  {
+    "id": "tx_red_1793371471454_331d96",
+    "userId": null,
+    "guestSessionId": "test_guest_redeem_1793371471427",
+    "quizAttemptId": null,
+    "points": -100,
+    "type": "COUPON_REDEMPTION",
+    "description": "Redeemed Coupon: ₹50 Off Student Books (KitabKhana & Academic Books)",
+    "createdAt": "2026-10-30T14:44:31.454Z"
+  },
+  {
+    "id": "tx_1793371522112_2da948",
+    "userId": null,
+    "guestSessionId": "test_guest_1793371522073",
+    "quizAttemptId": "test_att_1793371522102",
+    "points": 13,
+    "type": "QUIZ_COMPLETION",
+    "description": "Completed Quiz: Editorial Current Affairs Briefing (Last 7 Days) (4/5 correct)",
+    "createdAt": "2026-10-30T14:45:22.113Z"
+  },
+  {
+    "id": "seed_tx_1793371522177",
+    "guestSessionId": "test_guest_redeem_1793371522159",
+    "points": 120,
+    "type": "QUIZ_COMPLETION",
+    "description": "Manual seed for redemption test",
+    "createdAt": "2026-10-30T14:45:22.177Z"
+  },
+  {
+    "id": "tx_red_1793371522194_e31316",
+    "userId": null,
+    "guestSessionId": "test_guest_redeem_1793371522159",
+    "quizAttemptId": null,
+    "points": -100,
+    "type": "COUPON_REDEMPTION",
+    "description": "Redeemed Coupon: ₹50 Off Student Books (KitabKhana & Academic Books)",
+    "createdAt": "2026-10-30T14:45:22.194Z"
+  },
+  {
+    "id": "tx_1793371631934_9af7e4",
+    "userId": null,
+    "guestSessionId": "test_guest_1793371631898",
+    "quizAttemptId": "test_att_1793371631923",
+    "points": 13,
+    "type": "QUIZ_COMPLETION",
+    "description": "Completed Quiz: Editorial Current Affairs Briefing (Last 7 Days) (4/5 correct)",
+    "createdAt": "2026-10-30T14:47:11.934Z"
+  },
+  {
+    "id": "seed_tx_1793371631972",
+    "guestSessionId": "test_guest_redeem_1793371631962",
+    "points": 120,
+    "type": "QUIZ_COMPLETION",
+    "description": "Manual seed for redemption test",
+    "createdAt": "2026-10-30T14:47:11.972Z"
+  },
+  {
+    "id": "tx_red_1793371631989_0810fe",
+    "userId": null,
+    "guestSessionId": "test_guest_redeem_1793371631962",
+    "quizAttemptId": null,
+    "points": -100,
+    "type": "COUPON_REDEMPTION",
+    "description": "Redeemed Coupon: ₹50 Off Student Books (KitabKhana & Academic Books)",
+    "createdAt": "2026-10-30T14:47:11.989Z"
+  },
+  {
+    "id": "tx_1793372077480_af4bc6",
+    "userId": null,
+    "guestSessionId": "test_guest_1793372077427",
+    "quizAttemptId": "test_att_1793372077465",
+    "points": 13,
+    "type": "QUIZ_COMPLETION",
+    "description": "Completed Quiz: Editorial Current Affairs Briefing (Last 7 Days) (4/5 correct)",
+    "createdAt": "2026-10-30T14:54:37.480Z"
+  },
+  {
+    "id": "seed_tx_1793372077568",
+    "guestSessionId": "test_guest_redeem_1793372077549",
+    "points": 120,
+    "type": "QUIZ_COMPLETION",
+    "description": "Manual seed for redemption test",
+    "createdAt": "2026-10-30T14:54:37.568Z"
+  },
+  {
+    "id": "tx_red_1793372077592_7c220f",
+    "userId": null,
+    "guestSessionId": "test_guest_redeem_1793372077549",
+    "quizAttemptId": null,
+    "points": -100,
+    "type": "COUPON_REDEMPTION",
+    "description": "Redeemed Coupon: ₹50 Off Student Books (KitabKhana & Academic Books)",
+    "createdAt": "2026-10-30T14:54:37.592Z"
+  }
+]

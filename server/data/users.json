@@ -520,5 +520,285 @@
     "interests": [],
     "createdAt": "2026-10-30T09:25:40.658Z",
     "updatedAt": "2026-10-30T09:25:40.710Z"
+  },
+  {
+    "id": "usr_1793359975897_kdqrv",
+    "name": "Lookup Tester",
+    "email": "editor_lookup_1793359975881@upwise.news",
+    "password": "fccd2ee3dca5d46a9495a17aa6792b88:b0a4ea4080e1730cbc94f5b6000fea47f358f81ab93fd840343ba2d84b857d81636d8a3799fd281f86bcf22366a25bf35e65c3f35a5e2d15f5be69d5ce93a31b",
+    "role": "user",
+    "city": null,
+    "language": "en",
+    "topics": [],
+    "interests": [],
+    "createdAt": "2026-10-30T11:32:55.894Z",
+    "updatedAt": "2026-10-30T11:32:55.894Z"
+  },
+  {
+    "id": "usr_1793359976703_wh615",
+    "name": "Ananya Deshmukh",
+    "email": "ananya_1793359976094@upwise.news",
+    "password": "223e544a82313d59d035273383bb4c0e:cbd2d29567158613f6dcd2af0eb45021c820f86d7a291e5bf17187eac9ddae15d4e9dfa54959951580b05e913452e04b062b0d105978a2ec0669e2d30add43e2",
+    "role": "user",
+    "city": "Mumbai",
+    "language": "hi",
+    "topics": [
+      "sports"
+    ],
+    "interests": [],
+    "createdAt": "2026-10-30T11:32:56.703Z",
+    "updatedAt": "2026-10-30T11:32:56.823Z"
+  },
+  {
+    "id": "usr_1793360288987_ayrkj",
+    "name": "Lookup Tester",
+    "email": "editor_lookup_1793360288981@upwise.news",
+    "password": "a3a1bd800ba40e99ca3373acd7ddcceb:7ec26eb5ae43f66137611a05b07a2964a683fd81abb72bbd19a4520bf3335aec2e7f6fad64d56eb6bfa6530cfe26b26d0010154354237a57eb675f676e8a7d75",
+    "role": "user",
+    "city": null,
+    "language": "en",
+    "topics": [],
+    "interests": [],
+    "createdAt": "2026-10-30T11:38:08.986Z",
+    "updatedAt": "2026-10-30T11:38:08.986Z"
+  },
+  {
+    "id": "usr_1793360289051_0zc3m",
+    "name": "Ananya Deshmukh",
+    "email": "ananya_1793360289016@upwise.news",
+    "password": "a4eef2a4fdc025a8df5af7b7b0a87b32:9b1b0ec74bd9d6d6a28b4c57869963189e09d373dff9561a244f0d4521c1887f15306c1ef334a8def91aa90e1ff7e8756c689fa43d56bada9312108c974c89b2",
+    "role": "user",
+    "city": "Mumbai",
+    "language": "hi",
+    "topics": [
+      "sports"
+    ],
+    "interests": [],
+    "createdAt": "2026-10-30T11:38:09.051Z",
+    "updatedAt": "2026-10-30T11:38:09.103Z"
+  },
+  {
+    "id": "usr_1793360305210_k30nq",
+    "name": "Lookup Tester",
+    "email": "editor_lookup_1793360305204@upwise.news",
+    "password": "2add1ce5ad08ea219ce41016220d6f57:c70686038357076d62bcaef145d332bcc1fed283a97402a46957518fd54911e55014bb57785186499b1842fa6efef33ea06153d82634217af11a7752bc0296eb",
+    "role": "user",
+    "city": null,
+    "language": "en",
+    "topics": [],
+    "interests": [],
+    "createdAt": "2026-10-30T11:38:25.209Z",
+    "updatedAt": "2026-10-30T11:38:25.209Z"
+  },
+  {
+    "id": "usr_1793360305255_8452j",
+    "name": "Ananya Deshmukh",
+    "email": "ananya_1793360305228@upwise.news",
+    "password": "8a847aff49cd25504627743eff4d62be:ecf3cc08bf487d0e22840324ebc9ff1414a5a3a7dc404cb109b14c5bc1aafe870774fed1a1d22caa30e728045559b53b855136796f167e16e5f8a2f81cf301ce",
+    "role": "user",
+    "city": "Mumbai",
+    "language": "hi",
+    "topics": [
+      "sports"
+    ],
+    "interests": [],
+    "createdAt": "2026-10-30T11:38:25.255Z",
+    "updatedAt": "2026-10-30T11:38:25.290Z"
+  },
+  {
+    "id": "usr_1793360821695_1amwd",
+    "name": "Lookup Tester",
+    "email": "editor_lookup_1793360821691@upwise.news",
+    "password": "e0ffe68bce3afc28c55ecc3ac1f4b933:a87ca48c649c5b65b1786c66d4cac3788de9fc77bea7c426f140a0faa47a104cacd9186fc041d888980cbdbb10198a054429edef93d155720836f823d1f7f6d6",
+    "role": "user",
+    "city": null,
+    "language": "en",
+    "topics": [],
+    "interests": [],
+    "createdAt": "2026-10-30T11:47:01.695Z",
+    "updatedAt": "2026-10-30T11:47:01.695Z"
+  },
+  {
+    "id": "usr_1793360821741_7rpme",
+    "name": "Ananya Deshmukh",
+    "email": "ananya_1793360821716@upwise.news",
+    "password": "9360038de94a107c52d3b954cca376d8:e1827eba3abae3b1a28a0fa51474079266d715b1e4f1fd07589e63c077f5a1d5b20ca2e328cabf58953cc302f3fbddf264156e04a95af037557c1f2349e5befb",
+    "role": "user",
+    "city": "Mumbai",
+    "language": "hi",
+    "topics": [
+      "sports"
+    ],
+    "interests": [],
+    "createdAt": "2026-10-30T11:47:01.741Z",
+    "updatedAt": "2026-10-30T11:47:01.790Z"
+  },
+  {
+    "id": "usr_1793361325078_ppvx6",
+    "name": "Lookup Tester",
+    "email": "editor_lookup_1793361325068@upwise.news",
+    "password": "8b1f4a4a03239401b84ca9bac627f726:131e0ed507dd507efee8b2146be90af82a337a232399bcaba0dd4dfea666986f5f251eca7c019ce48c7ef2dc53ec4bcb36b81401fc0568040f851749fa350c0a",
+    "role": "user",
+    "city": null,
+    "language": "en",
+    "topics": [],
+    "interests": [],
+    "createdAt": "2026-10-30T11:55:25.077Z",
+    "updatedAt": "2026-10-30T11:55:25.077Z"
+  },
+  {
+    "id": "usr_1793361325175_68bvk",
+    "name": "Ananya Deshmukh",
+    "email": "ananya_1793361325131@upwise.news",
+    "password": "0d170d640f9d908a1e94a639f12cc0be:7506dd8630743ca5d740db7597dec7b02d04a1554dc7c5417a25bb6856b1884b30625bc0b4e16102dac757ccb670826a4520bd27f26c97678995c5dd12edf761",
+    "role": "user",
+    "city": "Mumbai",
+    "language": "hi",
+    "topics": [
+      "sports"
+    ],
+    "interests": [],
+    "createdAt": "2026-10-30T11:55:25.175Z",
+    "updatedAt": "2026-10-30T11:55:25.257Z"
+  },
+  {
+    "id": "usr_1793370853025_tdz0m",
+    "name": "Lookup Tester",
+    "email": "editor_lookup_1793370853017@upwise.news",
+    "password": "fd1e8d15c93ea9f2859aac74717f5db7:ca13d51a59c3ee400672616ab76cc74a2c8f92b20bc92c4f83bd6b5aae1ab47782d728acef51a2d2b0e008ccd686df3e186c4014ea4ecda4e9eb2a50488675f8",
+    "role": "user",
+    "city": null,
+    "language": "en",
+    "topics": [],
+    "interests": [],
+    "createdAt": "2026-10-30T14:34:13.024Z",
+    "updatedAt": "2026-10-30T14:34:13.024Z"
+  },
+  {
+    "id": "usr_1793370853108_o34na",
+    "name": "Ananya Deshmukh",
+    "email": "ananya_1793370853053@upwise.news",
+    "password": "8ddb2aac2be4db5c223cc4d44413c318:bbb58c096a8d811bb2b37e29765090bb3e49bb704bd479a816d198e3dd7a8920e1833e67140fc3e4c0ccd0cd6ffcd4018fe7a056475caef5c1dd0e8ac97c6e17",
+    "role": "user",
+    "city": "Mumbai",
+    "language": "hi",
+    "topics": [
+      "sports"
+    ],
+    "interests": [],
+    "createdAt": "2026-10-30T14:34:13.108Z",
+    "updatedAt": "2026-10-30T14:34:13.176Z"
+  },
+  {
+    "id": "usr_1793371471309_hwb85",
+    "name": "Lookup Tester",
+    "email": "editor_lookup_1793371471301@upwise.news",
+    "password": "2b0e9c846fa94e9ec4effd6feebd1740:6fd0a332d997a9e1bdf6c8bcb307aea9cb7e32f436d1704b1db81e0d5c0b47bf1094225576cd56d1f9320e6d27bccc00ee4918b64b5d2d84be7be9aff59a6b77",
+    "role": "user",
+    "city": null,
+    "language": "en",
+    "topics": [],
+    "interests": [],
+    "createdAt": "2026-10-30T14:44:31.308Z",
+    "updatedAt": "2026-10-30T14:44:31.308Z"
+  },
+  {
+    "id": "usr_1793371471403_rnwfl",
+    "name": "Ananya Deshmukh",
+    "email": "ananya_1793371471354@upwise.news",
+    "password": "c0f5407a454784f18d837397d7c44f71:9d9414f3ff90f8e26dbf2cf8d9121c29796491973972d8e0bbe6a19a149fb0a95b7cf44b21161ffffb1ac039d542201c05f20b4cf64fb4d5d6e47181d272689a",
+    "role": "user",
+    "city": "Mumbai",
+    "language": "hi",
+    "topics": [
+      "sports"
+    ],
+    "interests": [],
+    "createdAt": "2026-10-30T14:44:31.403Z",
+    "updatedAt": "2026-10-30T14:44:31.477Z"
+  },
+  {
+    "id": "usr_1793371521843_nhi95",
+    "name": "Lookup Tester",
+    "email": "editor_lookup_1793371521836@upwise.news",
+    "password": "5cd50b2064f9cdae5d194bea7765747f:d523abfa55352bff73a57c99e884277accabe82855fac710f68276ca587bed891488e72f84a85f2120fb88f181e47d187e1d720f94fab64c01a42761d2e98302",
+    "role": "user",
+    "city": null,
+    "language": "en",
+    "topics": [],
+    "interests": [],
+    "createdAt": "2026-10-30T14:45:21.842Z",
+    "updatedAt": "2026-10-30T14:45:21.842Z"
+  },
+  {
+    "id": "usr_1793371521978_xbcxd",
+    "name": "Ananya Deshmukh",
+    "email": "ananya_1793371521931@upwise.news",
+    "password": "a9a3ca26dfccf5381768f7fd197d03e0:0e11d03929c370f7134e1b78badb282fcc83884e6586455fbd9e3fb0812b7190573bf0bd040750d10d96ee35e4b41d3427e2dc7587d6fdd8ae5d1554801d96ca",
+    "role": "user",
+    "city": "Mumbai",
+    "language": "hi",
+    "topics": [
+      "sports"
+    ],
+    "interests": [],
+    "createdAt": "2026-10-30T14:45:21.978Z",
+    "updatedAt": "2026-10-30T14:45:22.051Z"
+  },
+  {
+    "id": "usr_1793371631841_fhjlg",
+    "name": "Lookup Tester",
+    "email": "editor_lookup_1793371631832@upwise.news",
+    "password": "2f9ef159ec20655c88a098b5fabfd8d3:707cc643a1148fe49962262bf3d3f6860ba8661c6f9947af1e6a8ad2b6c7b217d2cfe2aac0b42bcbabc4efeaf115d03a87e52209d05e794d3a76245814fcc857",
+    "role": "user",
+    "city": null,
+    "language": "en",
+    "topics": [],
+    "interests": [],
+    "createdAt": "2026-10-30T14:47:11.839Z",
+    "updatedAt": "2026-10-30T14:47:11.839Z"
+  },
+  {
+    "id": "usr_1793371631917_ni3s0",
+    "name": "Ananya Deshmukh",
+    "email": "ananya_1793371631867@upwise.news",
+    "password": "2b912224a3be6f6e76f8e43c3b268c68:81e0aceea139f278495531a4d0a601e0ab0656f3112530552c7807d022885d033d45a47e9e3198be0871c0050651f7823314c2524fa899c01237d10b12b9d49c",
+    "role": "user",
+    "city": "Mumbai",
+    "language": "hi",
+    "topics": [
+      "sports"
+    ],
+    "interests": [],
+    "createdAt": "2026-10-30T14:47:11.917Z",
+    "updatedAt": "2026-10-30T14:47:11.991Z"
+  },
+  {
+    "id": "usr_1793372077354_ucza4",
+    "name": "Lookup Tester",
+    "email": "editor_lookup_1793372077341@upwise.news",
+    "password": "6cf7e4afe91616c6d5fb2aedb435a25f:717067a39a60ea9bfe15f5d0ecfc13de96bdd8d59ca53a7581ae3e0eed5825a3e4dc84e4cc032e50e793bab8bcc4092305ccdcfc6c4f2526269b29ba4ed8d0f4",
+    "role": "user",
+    "city": null,
+    "language": "en",
+    "topics": [],
+    "interests": [],
+    "createdAt": "2026-10-30T14:54:37.351Z",
+    "updatedAt": "2026-10-30T14:54:37.351Z"
+  },
+  {
+    "id": "usr_1793372077479_f0r4v",
+    "name": "Ananya Deshmukh",
+    "email": "ananya_1793372077392@upwise.news",
+    "password": "a4d7509714e9fc4bf0dc8ddf8601709b:f1b61f6196716aafddc16dd6c705c39d2be4c368f47f3b37ba88ff39987f01bc8265d5a3e28a7a1cffba84f91f94472a14fe69634d5dcf1fb3b5afa427684609",
+    "role": "user",
+    "city": "Mumbai",
+    "language": "hi",
+    "topics": [
+      "sports"
+    ],
+    "interests": [],
+    "createdAt": "2026-10-30T14:54:37.479Z",
+    "updatedAt": "2026-10-30T14:54:37.589Z"
   }
 ]

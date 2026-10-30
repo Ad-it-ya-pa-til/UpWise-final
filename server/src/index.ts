@@ -12,6 +12,8 @@ import articleRoutes from './routes/articleRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import communityRoutes from './routes/communityRoutes.js';
 import aiRoutes from './routes/aiRoutes.js';
+import quizRoutes from './routes/quizRoutes.js';
+import rewardRoutes from './routes/rewardRoutes.js';
 import prisma from './db.js';
 import { seedInitialArticles, refreshAllFeeds } from './ingestion/ingestionService.js';
 import { seedDefaultUsers } from './services/authService.js';
@@ -73,6 +75,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', authRoutes);
 app.use('/api/community', communityRoutes);
 app.use('/api/ai', aiRoutes);
+app.use('/api/quizzes', quizRoutes);
+app.use('/api/rewards', rewardRoutes);
 
 app.use((err: Error, _req: Request, res: Response, _next: express.NextFunction) => {
   console.error('[Unhandled Server Error]', err);

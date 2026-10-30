@@ -1,7 +1,7 @@
 import React from 'react'
-import { Newspaper, MessageSquare, Palette, Globe, Plus } from 'lucide-react'
+import { Newspaper, MessageSquare, Palette, Globe, Plus, GraduationCap } from 'lucide-react'
 
-export type NavDestination = 'feed' | 'globe' | 'community' | 'comics'
+export type NavDestination = 'feed' | 'globe' | 'community' | 'comics' | 'quiz'
 
 export interface NavigationRailProps {
   activeDestination: NavDestination
@@ -53,6 +53,13 @@ export const NavigationRail: React.FC<NavigationRailProps> = ({
       isActive: activeDestination === 'comics',
       onClick: () => onSelectDestination('comics'),
     },
+    {
+      id: 'quiz' as NavDestination,
+      label: 'Quiz & Studio',
+      icon: GraduationCap,
+      isActive: activeDestination === 'quiz',
+      onClick: () => onSelectDestination('quiz'),
+    },
   ]
 
   return (
@@ -72,16 +79,14 @@ export const NavigationRail: React.FC<NavigationRailProps> = ({
               onClick={dest.onClick}
               aria-current={active ? 'page' : undefined}
               title={dest.label}
-              className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-md text-xs transition-colors ${
-                active
+              className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-md text-xs transition-colors ${active
                   ? 'text-white font-semibold bg-[#0F392B]'
                   : 'text-[#55504A] hover:text-[#141412] hover:bg-[#FAF7F2] font-medium'
-              }`}
+                }`}
             >
               <Icon
-                className={`w-4 h-4 shrink-0 stroke-[2] ${
-                  active ? 'text-white' : 'text-[#78716C]'
-                }`}
+                className={`w-4 h-4 shrink-0 stroke-[2] ${active ? 'text-white' : 'text-[#78716C]'
+                  }`}
               />
               <span className="hidden lg:inline truncate">{dest.label}</span>
             </button>

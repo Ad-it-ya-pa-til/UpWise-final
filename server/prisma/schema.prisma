@@ -79,22 +79,119 @@ model ArticleClusterMember {
 }
 
 model User {
-  id             String            @id @default(uuid())
-  name           String
-  email          String            @unique
-  password       String?
-  role           String            @default("user")
-  city           String?
-  language       String            @default("en")
-  topics         String[]          @default([])
-  createdAt      DateTime          @default(now())
-  updatedAt      DateTime          @default(now()) @updatedAt
-  interests      UserInterest[]
-  bookmarks      Bookmark[]
-  communityPosts CommunityPost[]
-  comments       Comment[]
-  reactions      PostReaction[]
-  reports        CommunityReport[]
+  id                 String              @id @default(uuid())
+  name               String
+  email              String              @unique
+  password           String?
+  role               String              @default("user")
+  pointsBalance      Int                 @default(0)
+  city               String?
+  language           String              @default("en")
+  topics             String[]            @default([])
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @default(now()) @updatedAt
+  interests          UserInterest[]
+  bookmarks          Bookmark[]
+  communityPosts     CommunityPost[]
+  comments           Comment[]
+  reactions          PostReaction[]
+  reports            CommunityReport[]
+  quizAttempts       QuizAttempt[]
+  rewardTransactions RewardTransaction[]
+  couponRedemptions  CouponRedemption[]
+}
+
+model Quiz {
+  id              String         @id @default(uuid())
+  title           String
+  quizType        String         // 'date_range' | 'daily'
+  startDate       String?
+  endDate         String?
+  learningSummary String?        @db.Text
+  questions       QuizQuestion[]
+  attempts        QuizAttempt[]
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @default(now()) @updatedAt
+}
+
+model QuizQuestion {
+  id                 String   @id @default(uuid())
+  quizId             String
+  questionText       String
+  options            String[] // 4 choices
+  correctAnswer      Int      // 0..3 (hidden from client)
+  explanation        String   @db.Text
+  sourceArticleId    String?
+  sourceArticleTitle String?
+  sourceUrl          String?
+  quiz               Quiz     @relation(fields: [quizId], references: [id], onDelete: Cascade)
+}
+
+model QuizAttempt {
+  id             String   @id @default(uuid())
+  userId         String?
+  guestSessionId String?
+  quizId         String
+  score          Int
+  totalQuestions Int
+  correctAnswers Int
+  timeTaken      Int
+  answers        Json
+  completedAt    DateTime @default(now())
+  user           User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  quiz           Quiz     @relation(fields: [quizId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([guestSessionId])
+  @@index([quizId])
+}
+
+model RewardTransaction {
+  id             String   @id @default(uuid())
+  userId         String?
+  guestSessionId String?
+  quizAttemptId  String?
+  points         Int      // Positive for credit, negative for debit
+  type           String   // 'QUIZ_COMPLETION' | 'COUPON_REDEMPTION'
+  description    String
+  createdAt      DateTime @default(now())
+  user           User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([guestSessionId])
+}
+
+model Coupon {
+  id           String             @id @default(uuid())
+  codePrefix   String             @default("UPW")
+  title        String
+  brand        String
+  description  String             @db.Text
+  discountText String
+  pointsCost   Int
+  terms        String             @db.Text
+  validityDays Int                @default(60)
+  isActive     Boolean            @default(true)
+  inventory    Int                @default(9999)
+  redemptions  CouponRedemption[]
+}
+
+model CouponRedemption {
+  id             String    @id @default(uuid())
+  userId         String?
+  guestSessionId String?
+  couponId       String
+  couponCode     String    @unique
+  pointsSpent    Int
+  status         String    @default("available") // 'available' | 'used' | 'expired'
+  redeemedAt     DateTime  @default(now())
+  expiresAt      DateTime
+  usedAt         DateTime?
+  coupon         Coupon    @relation(fields: [couponId], references: [id], onDelete: Cascade)
+  user           User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([guestSessionId])
 }
 
 model CommunityPost {

@@ -13,6 +13,9 @@ import { MobileBottomNav } from './components/layout/MobileBottomNav'
 import { CommunityHub } from './components/community/CommunityHub'
 import { EditorialComicsHub } from './components/community/EditorialComicsHub'
 import { NewsGlobeHub } from './components/globe/NewsGlobeHub'
+import { LearningStudio } from './components/learning/LearningStudio'
+import { RewardsModal } from './components/learning/RewardsModal'
+import { fetchBalanceApi } from './services/learningApi'
 import { UserProfile } from './types/navigation'
 import { Article, LanguageMode, LayoutMode, DatePreset } from './types/news'
 import { MOCK_ARTICLES } from './mock/articles.mock'
@@ -65,12 +68,14 @@ export default function App() {
   })
 
   const [destination, setDestination] = useState<NavDestination>('feed')
+  const [upPoints, setUpPoints] = useState<number>(0)
+  const [isRewardsOpen, setIsRewardsOpen] = useState<boolean>(false)
   const [openCommunityComposer, setOpenCommunityComposer] = useState(false)
 
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null)
   const [selectedSubcategoryId, setSelectedSubcategoryId] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState<string>('')
-  
+
   const [language, setLanguage] = useState<LanguageMode>(() => {
     try {
       const session = localStorage.getItem('upwise_user_session')
@@ -163,7 +168,7 @@ export default function App() {
       if (isCurrent && backendArticles && backendArticles.length > 0) {
         setArticles(backendArticles)
       }
-    }).catch(() => {})
+    }).catch(() => { })
     return () => { isCurrent = false }
   }, [language])
 
@@ -176,7 +181,7 @@ export default function App() {
       } else if (user) {
         setUser(null)
       }
-    }).catch(() => {})
+    }).catch(() => { })
     return () => { isCurrent = false }
   }, [])
 
@@ -185,7 +190,15 @@ export default function App() {
       if (serverBookmarks.length > 0) {
         setSavedArticleIds((prev) => Array.from(new Set([...prev, ...serverBookmarks.map((b) => b.id)])))
       }
-    }).catch(() => {})
+    }).catch(() => { })
+  }, [user])
+
+  useEffect(() => {
+    fetchBalanceApi().then((bal) => {
+      if (typeof bal.availableBalance === 'number') {
+        setUpPoints(bal.availableBalance)
+      }
+    }).catch(() => { })
   }, [user])
 
   const showTemporaryNotice = (msg: string) => {
@@ -384,7 +397,7 @@ export default function App() {
   const handleSignOutClick = () => {
     setUser(null)
     setUserPreferredTopics([])
-    logoutApi().catch(() => {})
+    logoutApi().catch(() => { })
     setCurrentView('feed')
     showTemporaryNotice('Signed out.')
   }
@@ -468,6 +481,7 @@ export default function App() {
         onNavigatePersonalize={handleNavigatePersonalize}
         activeDestination={destination}
         onSelectDestination={setDestination}
+
         onOpenNewPost={() => {
           if (!user) {
             showTemporaryNotice('Please sign in to publish a community dispatch.')
@@ -525,6 +539,7 @@ export default function App() {
           <NavigationRail
             activeDestination={destination}
             onSelectDestination={setDestination}
+
             onOpenNewPost={() => {
               if (!user) {
                 showTemporaryNotice('Please sign in to publish a community dispatch.')
@@ -584,12 +599,22 @@ export default function App() {
           {destination === 'comics' && (
             <EditorialComicsHub />
           )}
+
+          {destination === 'quiz' && (
+            <LearningStudio
+              onOpenRewards={() => setIsRewardsOpen(true)}
+              currentBalance={upPoints}
+              initialCategoryId={selectedCategoryId}
+              onBalanceUpdated={setUpPoints}
+            />
+          )}
         </main>
       </div>
 
       <MobileBottomNav
         activeDestination={destination}
         onSelectDestination={setDestination}
+
       />
 
       <ArticleReaderPanel
@@ -639,6 +664,12 @@ export default function App() {
         isOpen={policyModalOpen}
         initialTab={policyModalTab}
         onClose={() => setPolicyModalOpen(false)}
+      />
+
+      <RewardsModal
+        isOpen={isRewardsOpen}
+        onClose={() => setIsRewardsOpen(false)}
+        onBalanceUpdated={setUpPoints}
       />
     </div>
   )

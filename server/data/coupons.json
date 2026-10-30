@@ -1,0 +1,67 @@
+[
+  {
+    "id": "coupon-notebook-free",
+    "codePrefix": "NOTEBOOK",
+    "title": "Free Digital Revision Notebook",
+    "brand": "UpWise Editorial Press",
+    "description": "Unlock an interactive digital current affairs revision notebook with curated highlights, timelines, and analytical notes.",
+    "discountText": "FREE ACCESS",
+    "pointsCost": 50,
+    "terms": "Instant digital access. Valid across web and mobile viewports for 60 days.",
+    "validityDays": 60,
+    "isActive": true,
+    "inventory": 9999
+  },
+  {
+    "id": "coupon-books-50",
+    "codePrefix": "BOOKS50",
+    "title": "₹50 Off Student Books",
+    "brand": "KitabKhana & Academic Books",
+    "description": "Flat ₹50 discount on any academic textbook, current affairs compendium, or UPSC/civil services prep material.",
+    "discountText": "₹50 OFF",
+    "pointsCost": 100,
+    "terms": "Valid on purchases above ₹299. Single-use per student order. Valid for 60 days from redemption.",
+    "validityDays": 60,
+    "isActive": true,
+    "inventory": 490
+  },
+  {
+    "id": "coupon-journal-15",
+    "codePrefix": "JOURNAL15",
+    "title": "15% Off Academic Journal Archive",
+    "brand": "National Editorial Review",
+    "description": "15% off subscription to quarterly peer-reviewed policy journals, legal digests, and historical archives.",
+    "discountText": "15% OFF",
+    "pointsCost": 150,
+    "terms": "Applicable on monthly, quarterly, and annual academic research tiers.",
+    "validityDays": 60,
+    "isActive": true,
+    "inventory": 300
+  },
+  {
+    "id": "coupon-campus-100",
+    "codePrefix": "CAMPUS100",
+    "title": "₹100 Off Campus Bookstore",
+    "brand": "Campus Book Haven",
+    "description": "Flat ₹100 instant deduction on university textbooks, stationery sets, and research monographs.",
+    "discountText": "₹100 OFF",
+    "pointsCost": 200,
+    "terms": "Minimum cart value ₹500 at participating college bookstores and partner university outlets.",
+    "validityDays": 60,
+    "isActive": true,
+    "inventory": 250
+  },
+  {
+    "id": "coupon-mock-20",
+    "codePrefix": "MOCK20",
+    "title": "20% Off Mock Test Series",
+    "brand": "Socrates Editorial Learning",
+    "description": "20% waiver on comprehensive current affairs analytical test series and weekly question simulations.",
+    "discountText": "20% OFF",
+    "pointsCost": 250,
+    "terms": "Valid for all 2026 examination batches and analytical revision packs.",
+    "validityDays": 60,
+    "isActive": true,
+    "inventory": 150
+  }
+]

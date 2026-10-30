@@ -317,3 +317,53 @@ test('Satellite Map Service: Filters work cohesively together', async () => {
     assert.equal(a.categoryId, 'tech-science', 'Category filter applies')
   })
 })
+
+test('Learning Studio: Fallback Quiz Generation with Topic and Count (5, 10, 15, 20)', async () => {
+  const { generateQuizByDateApi } = await import('../services/learningApi.js')
+  
+  const res5 = await generateQuizByDateApi({
+    preset: '30d',
+    topic: 'Technology & Science',
+    count: 5,
+  })
+  assert.equal(res5.success, true)
+  assert.ok(res5.quiz)
+  assert.equal(res5.quiz.questions.length, 5, 'Should generate 5 questions')
+
+  const res10 = await generateQuizByDateApi({
+    preset: '30d',
+    topic: 'India & Politics',
+    count: 10,
+  })
+  assert.equal(res10.success, true)
+  assert.ok(res10.quiz)
+  assert.equal(res10.quiz.questions.length, 10, 'Should generate 10 questions')
+
+  // Check question structure integrity
+  for (const q of res10.quiz.questions) {
+    assert.ok(q.questionText)
+    assert.equal(q.options.length, 4)
+    assert.ok(q.sourceArticleTitle)
+    assert.ok(q.sourcePublisher)
+  }
+})
+
+test('Learning Studio: Fallback Flashcards Generation with Topic and Count', async () => {
+  const { generateFlashcardsByDateApi } = await import('../services/learningApi.js')
+
+  const res = await generateFlashcardsByDateApi({
+    preset: '30d',
+    topic: 'Technology & Science',
+    count: 15,
+  })
+
+  assert.equal(res.success, true)
+  assert.ok(res.flashcards)
+  assert.equal(res.flashcards.length, 15, 'Should generate 15 flashcards')
+
+  const card = res.flashcards[0]
+  assert.ok(card.front)
+  assert.ok(card.back)
+  assert.ok(card.sourceArticleTitle)
+  assert.ok(card.sourcePublisher)
+})

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Newspaper, Globe, MessageSquare, Palette } from 'lucide-react'
+import { Newspaper, Globe, MessageSquare, Palette, GraduationCap } from 'lucide-react'
 import { NavDestination } from './NavigationRail'
 
 export interface MobileBottomNavProps {
@@ -34,6 +34,11 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
       label: 'Comics',
       icon: Palette,
     },
+    {
+      id: 'quiz' as NavDestination,
+      label: 'Quiz',
+      icon: GraduationCap,
+    },
   ]
 
   return (
@@ -51,11 +56,10 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
             type="button"
             onClick={() => onSelectDestination(dest.id)}
             aria-current={isActive ? 'page' : undefined}
-            className={`flex flex-col items-center gap-1 py-1 px-3 rounded text-[11px] transition-colors relative ${
-              isActive
+            className={`flex flex-col items-center gap-1 py-1 px-3 rounded text-[11px] transition-colors relative ${isActive
                 ? 'text-[#171715] font-semibold'
                 : 'text-[#6B665E] hover:text-[#171715] font-medium'
-            }`}
+              }`}
           >
             <Icon className={`w-5 h-5 stroke-[1.75] ${isActive ? 'text-[#C84B31]' : 'text-[#78716C]'}`} />
             <span>{dest.label}</span>
