@@ -24,7 +24,14 @@
     "technology": "ટેકનોલોજી",
     "science": "વિજ્ઞાન",
     "sports": "રમતગમત",
-    "culture": "સંસ્કૃતિ"
+    "culture": "સંસ્કૃતિ",
+    "indiaPolitics": "ભારત અને રાજકારણ",
+    "careers": "કારકિર્દી અને શિક્ષણ",
+    "aiStartups": "એઆઈ અને સ્ટાર્ટઅપ્સ",
+    "techScience": "ટેકનોલોજી અને વિજ્ઞાન",
+    "businessEconomy": "વ્યાપાર અને અર્થતંત્ર",
+    "worldLifestyle": "વિશ્વ અને જીવનશૈલી",
+    "allCurrentAffairs": "તમામ વર્તમાન પ્રવાહો"
   },
   "filters": {
     "language": "ભાષા",
@@ -45,7 +52,22 @@
     "reset": "રીસેટ",
     "layout": "લેઆઉટ",
     "stack": "સ્ટેક",
-    "grid": "ગ્રીડ"
+    "grid": "ગ્રીડ",
+    "past7Days": "છેલ્લા ૭ દિવસ",
+    "thisMonth": "આ મહિને",
+    "allSources": "તમામ સ્ત્રોતો",
+    "sourcesCount": "સ્ત્રોતો ({{count}})",
+    "filterPublishers": "પ્રકાશકો શોધો...",
+    "selectAll": "બધા પસંદ કરો",
+    "clear": "સાફ કરો",
+    "noPublishersFound": "કોઈ પ્રકાશક મળ્યા નથી",
+    "storiesCount": "{{count}} સમાચાર",
+    "storiesCount_other": "{{count}} સમાચારો",
+    "frontPageLayout": "મુખ્ય પૃષ્ઠ",
+    "digestLayout": "સારાંશ",
+    "filteredBy": "ફિલ્ટર કરેલ:",
+    "savedStories": "સાચવેલા સમાચારો",
+    "resetAll": "બધું રીસેટ કરો"
   },
   "feed": {
     "leadStory": "મુખ્ય સમાચાર",

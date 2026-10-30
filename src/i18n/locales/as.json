@@ -59,7 +59,15 @@
     "storiesCount": "{{count}}টা বাতৰি",
     "storiesCount_other": "{{count}}টা বাতৰি",
     "frontPageLayout": "মুখ্য পৃষ্ঠা",
-    "digestLayout": "সাৰাংশ"
+    "digestLayout": "সাৰাংশ",
+    "sourcesCount": "উৎস ({{count}})",
+    "filterPublishers": "প্ৰকাশক ফিল্টাৰ কৰক...",
+    "selectAll": "সকলো বাছক",
+    "clear": "মচি পেলাওক",
+    "noPublishersFound": "কোনো প্ৰকাশক পোৱা নগল",
+    "filteredBy": "ফিল্টাৰ কৰা হৈছে:",
+    "savedStories": "সংৰক্ষিত বাতৰি",
+    "resetAll": "সকলো ৰিচেট কৰক"
   },
   "feed": {
     "leadStory": "শীৰ্ষ বাতৰি",

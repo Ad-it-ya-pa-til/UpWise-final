@@ -24,7 +24,14 @@
     "technology": "సాంకేతికత",
     "science": "సైన్స్",
     "sports": "క్రీడలు",
-    "culture": "సంస్కృతి"
+    "culture": "సంస్కృతి",
+    "indiaPolitics": "భారతదేశం మరియు రాజకీయాలు",
+    "careers": "కెరీర్ మరియు విద్య",
+    "aiStartups": "ఏఐ మరియు స్టార్టప్‌లు",
+    "techScience": "సాంకేతికత మరియు సైన్స్",
+    "businessEconomy": "వ్యాపారం మరియు ఆర్థిక వ్యవస్థ",
+    "worldLifestyle": "ప్రపంచం మరియు జీవనశైలి",
+    "allCurrentAffairs": "అన్ని వర్తమాన వ్యవహారాలు"
   },
   "filters": {
     "language": "భాష",
@@ -45,7 +52,22 @@
     "reset": "రీసెట్",
     "layout": "లేఅవుట్",
     "stack": "స్టాక్",
-    "grid": "గ్రిడ్"
+    "grid": "గ్రిడ్",
+    "past7Days": "గత 7 రోజులు",
+    "thisMonth": "ఈ నెల",
+    "allSources": "అన్ని మూలాలు",
+    "sourcesCount": "మూలాలు ({{count}})",
+    "filterPublishers": "ప్రచురణకర్తలను శోధించండి...",
+    "selectAll": "అన్నీ ఎంచుకోండి",
+    "clear": "క్లియర్ చేయండి",
+    "noPublishersFound": "ప్రచురణకర్తలు కనుగొనబడలేదు",
+    "storiesCount": "{{count}} వార్త",
+    "storiesCount_other": "{{count}} వార్తలు",
+    "frontPageLayout": "మొదటి పేజీ",
+    "digestLayout": "సారాంశం",
+    "filteredBy": "ఫిల్టర్ చేసినవి:",
+    "savedStories": "భద్రపరిచిన వార్తలు",
+    "resetAll": "అన్నీ రీసెట్ చేయండి"
   },
   "feed": {
     "leadStory": "ప్రధాన వార్త",

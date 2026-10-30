@@ -24,7 +24,14 @@
     "technology": "தொழில்நுட்பம்",
     "science": "அறிவியல்",
     "sports": "விளையாட்டு",
-    "culture": "கலாச்சாரம்"
+    "culture": "கலாச்சாரம்",
+    "indiaPolitics": "இந்தியா மற்றும் அரசியல்",
+    "careers": "தொழில் மற்றும் கல்வி",
+    "aiStartups": "ஏஐ மற்றும் தொடக்க நிறுவனங்கள்",
+    "techScience": "தொழில்நுட்பம் மற்றும் அறிவியல்",
+    "businessEconomy": "வணிகம் மற்றும் பொருளாதாரம்",
+    "worldLifestyle": "உலகம் மற்றும் வாழ்க்கை முறை",
+    "allCurrentAffairs": "அனைத்து நடப்பு நிகழ்வுகள்"
   },
   "filters": {
     "language": "மொழி",
@@ -45,7 +52,22 @@
     "reset": "மீட்டமை",
     "layout": "அமைப்பு",
     "stack": "அடுக்கு",
-    "grid": "கட்டம்"
+    "grid": "கட்டம்",
+    "past7Days": "கடந்த 7 நாட்கள்",
+    "thisMonth": "இந்த மாதம்",
+    "allSources": "அனைத்து ஆதாரங்கள்",
+    "sourcesCount": "ஆதாரங்கள் ({{count}})",
+    "filterPublishers": "பதிப்பாளர்களை வடிகட்டுக...",
+    "selectAll": "அனைத்தையும் தேர்ந்தெடு",
+    "clear": "அழி",
+    "noPublishersFound": "பதிப்பாளர்கள் இல்லை",
+    "storiesCount": "{{count}} செய்தி",
+    "storiesCount_other": "{{count}} செய்திகள்",
+    "frontPageLayout": "முதல் பக்கம்",
+    "digestLayout": "சுருக்கம்",
+    "filteredBy": "வடிகட்டப்பட்டது:",
+    "savedStories": "சேமிக்கப்பட்ட செய்திகள்",
+    "resetAll": "மீட்டமை"
   },
   "feed": {
     "leadStory": "முக்கிய செய்தி",

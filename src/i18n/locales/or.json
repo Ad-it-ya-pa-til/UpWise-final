@@ -24,7 +24,14 @@
     "technology": "ପ୍ରଯୁକ୍ତିବିଦ୍ୟା",
     "science": "ବିଜ୍ଞାନ",
     "sports": "କ୍ରୀଡ଼ା",
-    "culture": "ସଂସ୍କୃତି"
+    "culture": "ସଂସ୍କୃତି",
+    "indiaPolitics": "ଭାରତ ଓ ରାଜନୀତି",
+    "careers": "କ୍ୟାରିଅର୍ ଓ ଶିକ୍ଷା",
+    "aiStartups": "ଏଆଇ ଓ ଷ୍ଟାର୍ଟଅପ୍",
+    "techScience": "ପ୍ରଯୁକ୍ତିବିଦ୍ୟା ଓ ବିଜ୍ଞାନ",
+    "businessEconomy": "ବ୍ୟବସାୟ ଓ ଅର୍ଥନୀତି",
+    "worldLifestyle": "ବିଶ୍ୱ ଓ ଜୀବନଶୈଳୀ",
+    "allCurrentAffairs": "ସମସ୍ତ ସାମ୍ପ୍ରତିକ ଘଟଣାବଳୀ"
   },
   "filters": {
     "language": "ଭାଷା",
@@ -45,7 +52,22 @@
     "reset": "ରିସେଟ୍",
     "layout": "ଲେଆଉଟ୍",
     "stack": "ଷ୍ଟାକ୍",
-    "grid": "ଗ୍ରୀଡ୍"
+    "grid": "ଗ୍ରୀଡ୍",
+    "past7Days": "ଗତ ୭ ଦିନ",
+    "thisMonth": "ଏହି ମାସ",
+    "allSources": "ସମସ୍ତ ଉତ୍ସ",
+    "sourcesCount": "ଉତ୍ସ ({{count}})",
+    "filterPublishers": "ପ୍ରକାଶକ ଖୋଜନ୍ତୁ...",
+    "selectAll": "ସବୁ ବାଛନ୍ତୁ",
+    "clear": "ସଫା କରନ୍ତୁ",
+    "noPublishersFound": "କୌଣସି ପ୍ରକାଶକ ମିଳିଲେ ନାହିଁ",
+    "storiesCount": "{{count}}ଟି ଖବର",
+    "storiesCount_other": "{{count}}ଟି ଖବର",
+    "frontPageLayout": "ମୁଖ୍ୟ ପୃଷ୍ଠା",
+    "digestLayout": "ସଂକ୍ଷିପ୍ତ",
+    "filteredBy": "ଫିଲ୍ଟର୍ ହୋଇଥିବା:",
+    "savedStories": "ସାଇତା ଖବର",
+    "resetAll": "ସବୁ ରିସେଟ୍ କରନ୍ତୁ"
   },
   "feed": {
     "leadStory": "ପ୍ରମୁଖ ଖବର",
