@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useCategoryTranslation } from '../../utils/categoryTranslation'
 import { Bookmark, Share2, ExternalLink, ArrowRight, CheckCircle2, Newspaper } from 'lucide-react'
 import { Article, LanguageMode } from '../../types/news'
 
@@ -22,6 +23,8 @@ export const InShortsCard: React.FC<InShortsCardProps> = ({
   onShare,
   className = '',
 }) => {
+  const { t } = useTranslation();
+  const translateCategory = useCategoryTranslation();
   const [imageError, setImageError] = useState(false)
   const isHindi = language === 'hi'
   const displayTitle = isHindi && article.titleHi ? article.titleHi : article.title
@@ -57,7 +60,7 @@ export const InShortsCard: React.FC<InShortsCardProps> = ({
           <div>
             <div className="flex flex-wrap items-center gap-2 mb-2.5">
               <span className="text-[10px] font-bold uppercase tracking-wider text-[#C84B31]">
-                {article.categoryName}
+                {translateCategory(article.categoryName)}
               </span>
               <span className="text-[#D4CDBF]">•</span>
               <span className="text-xs font-semibold text-[#171715] flex items-center gap-1">

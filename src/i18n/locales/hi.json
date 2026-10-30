@@ -27,7 +27,11 @@
     "culture": "संस्कृति",
     "indiaPolitics": "भारत व राजनीति",
     "careers": "करियर",
-    "aiStartups": "एआई व स्टार्टअप्स"
+    "aiStartups": "एआई व स्टार्टअप्स",
+    "techScience": "प्रौद्योगिकी व विज्ञान",
+    "businessEconomy": "व्यापार व अर्थव्यवस्था",
+    "worldLifestyle": "विश्व व जीवनशैली",
+    "allCurrentAffairs": "सभी समसामयिक घटनाएं"
   },
   "filters": {
     "language": "भाषा",

@@ -27,7 +27,11 @@
     "culture": "ਸੱਭਿਆਚਾਰ",
     "indiaPolitics": "ਭਾਰਤ ਅਤੇ ਰਾਜਨੀਤੀ",
     "careers": "ਕਰੀਅਰ",
-    "aiStartups": "ਏਆਈ ਅਤੇ ਸਟਾਰਟਅੱਪ"
+    "aiStartups": "ਏਆਈ ਅਤੇ ਸਟਾਰਟਅੱਪ",
+    "techScience": "ਤਕਨਾਲੋਜੀ ਅਤੇ ਵਿਗਿਆਨ",
+    "businessEconomy": "ਵਪਾਰ ਅਤੇ ਆਰਥਿਕਤਾ",
+    "worldLifestyle": "ਦੁਨੀਆ ਅਤੇ ਜੀਵਨ ਸ਼ੈਲੀ",
+    "allCurrentAffairs": "ਸਾਰੇ ਮੌਜੂਦਾ ਮਾਮਲੇ"
   },
   "filters": {
     "language": "ਭਾਸ਼ਾ",
@@ -45,7 +49,7 @@
     "fromDate": "ਤੋਂ",
     "toDate": "ਤੱਕ",
     "apply": "ਲਾਗੂ ਕਰੋ",
-    "reset": "ਰੀਸੈਟ",
+    "reset": "ਰੀਸੈੱਟ",
     "layout": "ਲੇਆਉਟ",
     "stack": "ਸਟੈਕ",
     "grid": "ਗਰਿੱਡ",

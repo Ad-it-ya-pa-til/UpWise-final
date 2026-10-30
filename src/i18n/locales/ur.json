@@ -27,7 +27,11 @@
     "culture": "ثقافت",
     "indiaPolitics": "بھارت اور سیاست",
     "careers": "روزگار اور تعلیم",
-    "aiStartups": "مصنوعی ذہانت اور اسٹارٹ اپس"
+    "aiStartups": "مصنوعی ذہانت اور اسٹارٹ اپس",
+    "techScience": "ٹیکنالوجی اور سائنس",
+    "businessEconomy": "کاروبار اور معیشت",
+    "worldLifestyle": "دنیا اور طرز زندگی",
+    "allCurrentAffairs": "تمام حالات حاضرہ"
   },
   "filters": {
     "language": "زبان",
@@ -45,7 +49,7 @@
     "fromDate": "از",
     "toDate": "تا",
     "apply": "لاگو کریں",
-    "reset": "دوبارہ ترتیب دیں",
+    "reset": "ری سیٹ",
     "layout": "ترتیب",
     "stack": "اسٹیک",
     "grid": "گرڈ",

@@ -27,7 +27,11 @@
     "culture": "Culture",
     "indiaPolitics": "India & Politics",
     "careers": "Careers",
-    "aiStartups": "AI & Startups"
+    "aiStartups": "AI & Startups",
+    "techScience": "Technology & Science",
+    "businessEconomy": "Business & Economy",
+    "worldLifestyle": "World & Lifestyle",
+    "allCurrentAffairs": "All Current Affairs (Cross-Disciplinary)"
   },
   "filters": {
     "language": "Language",

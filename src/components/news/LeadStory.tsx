@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useCategoryTranslation } from '../../utils/categoryTranslation'
 import { Bookmark, Clock, ArrowRight, ExternalLink, MapPin } from 'lucide-react'
 import { Article, LanguageMode } from '../../types/news'
 
@@ -19,6 +20,7 @@ export const LeadStory: React.FC<LeadStoryProps> = ({
   onToggleSave,
 }) => {
   const { t } = useTranslation();
+  const translateCategory = useCategoryTranslation();
   const [imageError, setImageError] = useState(false)
   const isHindi = language === 'hi'
   const displayTitle = isHindi && article.titleHi ? article.titleHi : article.title
@@ -47,7 +49,7 @@ export const LeadStory: React.FC<LeadStoryProps> = ({
             <div className="flex items-center gap-2 mb-3">
               <span className="w-2 h-2 rounded-full bg-[#D95D39] shrink-0" />
               <span className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[#141412] font-sans">
-                {article.categoryName || 'India & Politics'}
+                {translateCategory(article.categoryName || 'India & Politics')}
               </span>
             </div>
 
@@ -146,7 +148,7 @@ export const LeadStory: React.FC<LeadStoryProps> = ({
             ) : (
               <div className="w-full h-full flex flex-col items-center justify-center p-6 text-center text-[#78716C]">
                 <p className="text-sm font-semibold text-[#141412]">{article.source.name}</p>
-                <p className="text-xs text-[#78716C] mt-1">{article.categoryName}</p>
+                <p className="text-xs text-[#78716C] mt-1">{translateCategory(article.categoryName)}</p>
               </div>
             )}
 

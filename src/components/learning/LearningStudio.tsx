@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useCategoryTranslation } from '../../utils/categoryTranslation'
 import {
   Sparkles,
   Calendar,
@@ -66,6 +67,7 @@ export const LearningStudio: React.FC<LearningStudioProps> = ({
   className = '',
 }) => {
   const { t } = useTranslation()
+  const translateCategory = useCategoryTranslation()
   // -------------------------------------------------------------
   // Mode Switcher State
   // -------------------------------------------------------------
@@ -176,7 +178,7 @@ export const LearningStudio: React.FC<LearningStudioProps> = ({
       return 'All Current Affairs'
     }
     const found = CATEGORY_GROUPS.find((g) => g.id === selectedTopic)
-    return found ? found.name : selectedTopic
+    return found ? translateCategory(found.name) : selectedTopic
   }, [selectedTopic, customTopicInput])
 
   // -------------------------------------------------------------
@@ -605,7 +607,7 @@ export const LearningStudio: React.FC<LearningStudioProps> = ({
                             : 'text-[#3A3732] hover:bg-[#FAF7F2]'
                         }`}
                       >
-                        <span>All Current Affairs (Cross-Disciplinary)</span>
+                        <span>{t('sections.allCurrentAffairs', 'All Current Affairs (Cross-Disciplinary)')}</span>
                         {selectedTopic === 'all' && <Check className="w-3.5 h-3.5" />}
                       </button>
                     </div>
@@ -629,7 +631,7 @@ export const LearningStudio: React.FC<LearningStudioProps> = ({
                                 : 'text-[#3A3732] hover:bg-[#FAF7F2]'
                             }`}
                           >
-                            <span>{group.name}</span>
+                            <span>{translateCategory(group.name)}</span>
                             {isSelected && <Check className="w-3.5 h-3.5" />}
                           </button>
                         )

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useCategoryTranslation } from '../../utils/categoryTranslation'
 import { Bookmark, Clock, ExternalLink, Layers } from 'lucide-react'
 import { Article, LanguageMode } from '../../types/news'
 
@@ -21,6 +22,7 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
   variant = 'standard',
 }) => {
   const { t } = useTranslation();
+  const translateCategory = useCategoryTranslation();
   const [imageError, setImageError] = useState(false)
   const isHindi = language === 'hi'
   const displayTitle = isHindi && article.titleHi ? article.titleHi : article.title
@@ -42,7 +44,7 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
           <div className="flex items-center gap-1.5 mb-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-[#D95D39] shrink-0" />
             <span className="text-[10px] font-bold uppercase tracking-wider text-[#141412]">
-              {article.categoryName}
+              {translateCategory(article.categoryName)}
             </span>
           </div>
 
@@ -102,7 +104,7 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
           <div className="flex items-center gap-1.5 flex-wrap">
             <span className="w-1.5 h-1.5 rounded-full bg-[#D95D39] shrink-0" />
             <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#141412]">
-              {article.categoryName}
+              {translateCategory(article.categoryName)}
             </span>
             {article.cluster && article.cluster.sourceCount > 1 && (
               <span

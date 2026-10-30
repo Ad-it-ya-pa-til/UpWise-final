@@ -1,3 +1,4 @@
+import { useCategoryTranslation } from '../../utils/categoryTranslation'
 import React, { useState, useRef, useEffect } from 'react'
 import { Menu, X, ChevronDown, ChevronRight, Check } from 'lucide-react'
 import { CategoryGroup } from '../../types/navigation'
@@ -18,6 +19,7 @@ export const CategoryMenu: React.FC<CategoryMenuProps> = ({
   onSelectCategory,
   className = '',
 }) => {
+  const translateCategory = useCategoryTranslation();
   const [isOpen, setIsOpen] = useState(false)
   const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({
     'india-politics': true, // Keep first open by default
@@ -141,7 +143,7 @@ export const CategoryMenu: React.FC<CategoryMenuProps> = ({
                       {isGroupSelected && (
                         <span className="w-1.5 h-1.5 rounded-full bg-newspaper-yellow shrink-0" />
                       )}
-                      <span>{group.name}</span>
+                      <span>{translateCategory(group.name)}</span>
                     </button>
 
                     {/* Expand/Collapse Chevron Button */}

@@ -27,6 +27,7 @@ export const Footer: React.FC<FooterProps> = ({
   onToggleReducedMotion,
   onOpenPolicyModal,
 }) => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('')
   const [emailError, setEmailError] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -143,7 +144,7 @@ export const Footer: React.FC<FooterProps> = ({
                   onClick={() => onSelectCategory?.('india-politics')}
                   className="hover:text-[#C84B31] transition-colors text-left"
                 >
-                  India & Politics
+                  {t('sections.indiaPolitics', 'India & Politics')}
                 </button>
               </li>
               <li>
@@ -152,7 +153,7 @@ export const Footer: React.FC<FooterProps> = ({
                   onClick={() => onSelectCategory?.('tech-science')}
                   className="hover:text-[#C84B31] transition-colors text-left"
                 >
-                  Technology & Science
+                  {t('sections.techScience', 'Technology & Science')}
                 </button>
               </li>
               <li>
@@ -161,7 +162,7 @@ export const Footer: React.FC<FooterProps> = ({
                   onClick={() => onSelectCategory?.('business-economy')}
                   className="hover:text-[#C84B31] transition-colors text-left"
                 >
-                  Business & Markets
+                  {t('sections.businessEconomy', 'Business & Markets')}
                 </button>
               </li>
               <li>
@@ -170,7 +171,7 @@ export const Footer: React.FC<FooterProps> = ({
                   onClick={() => onSelectCategory?.('sports')}
                   className="hover:text-[#C84B31] transition-colors text-left"
                 >
-                  Sports & Athletics
+                  {t('sections.sports', 'Sports & Athletics')}
                 </button>
               </li>
               <li>

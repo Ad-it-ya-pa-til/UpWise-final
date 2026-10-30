@@ -27,7 +27,11 @@
     "culture": "সংস্কৃতি",
     "indiaPolitics": "ভারত ও রাজনীতি",
     "careers": "কর্মজীবন ও শিক্ষা",
-    "aiStartups": "এআই ও স্টার্টআপ"
+    "aiStartups": "এআই ও স্টার্টআপ",
+    "techScience": "প্রযুক্তি ও বিজ্ঞান",
+    "businessEconomy": "বাণিজ্য ও অর্থনীতি",
+    "worldLifestyle": "বিশ্ব ও জীবনধারা",
+    "allCurrentAffairs": "সমস্ত সাম্প্রতিক বিষয়"
   },
   "filters": {
     "language": "ভাষা",
@@ -45,7 +49,7 @@
     "fromDate": "হতে",
     "toDate": "পর্যন্ত",
     "apply": "প্রয়োগ করুন",
-    "reset": "পুনরায় সেট করুন",
+    "reset": "রিসেট",
     "layout": "বিন্যাস",
     "stack": "স্ট্যাক",
     "grid": "গ্রিড",
