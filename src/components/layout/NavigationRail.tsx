@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { Newspaper, MessageSquare, Palette, Globe, Plus, GraduationCap } from 'lucide-react'
 
 export type NavDestination = 'feed' | 'globe' | 'community' | 'comics' | 'quiz'
@@ -18,10 +19,11 @@ export const NavigationRail: React.FC<NavigationRailProps> = ({
   onNavigateHome,
   className = '',
 }) => {
+  const { t } = useTranslation()
   const destinations = [
     {
       id: 'feed' as NavDestination,
-      label: 'Front Page',
+      label: t('nav.news', 'Front Page'),
       icon: Newspaper,
       isActive: activeDestination === 'feed',
       onClick: () => {
@@ -34,28 +36,28 @@ export const NavigationRail: React.FC<NavigationRailProps> = ({
     },
     {
       id: 'globe' as NavDestination,
-      label: 'News Globe',
+      label: t('nav.globe', 'News Globe'),
       icon: Globe,
       isActive: activeDestination === 'globe',
       onClick: () => onSelectDestination('globe'),
     },
     {
       id: 'community' as NavDestination,
-      label: 'Community',
+      label: t('nav.community', 'Community'),
       icon: MessageSquare,
       isActive: activeDestination === 'community',
       onClick: () => onSelectDestination('community'),
     },
     {
       id: 'comics' as NavDestination,
-      label: 'Cartoons',
+      label: t('nav.cartoons', 'Cartoons'),
       icon: Palette,
       isActive: activeDestination === 'comics',
       onClick: () => onSelectDestination('comics'),
     },
     {
       id: 'quiz' as NavDestination,
-      label: 'Quiz & Studio',
+      label: t('nav.quizAndCards', 'Quiz & Studio'),
       icon: GraduationCap,
       isActive: activeDestination === 'quiz',
       onClick: () => onSelectDestination('quiz'),

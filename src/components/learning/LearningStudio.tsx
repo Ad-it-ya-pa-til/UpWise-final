@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   Sparkles,
   Calendar,
@@ -64,6 +65,7 @@ export const LearningStudio: React.FC<LearningStudioProps> = ({
   initialCategoryId = null,
   className = '',
 }) => {
+  const { t } = useTranslation()
   // -------------------------------------------------------------
   // Mode Switcher State
   // -------------------------------------------------------------
@@ -451,7 +453,7 @@ export const LearningStudio: React.FC<LearningStudioProps> = ({
               } focus-visible:ring-2 focus-visible:ring-[#0F392B] focus-visible:outline-none`}
             >
               <HelpCircle className="w-4 h-4" />
-              <span>Quiz Mode</span>
+              <span>{t('learning.quizMode', 'Quiz Mode')}</span>
             </button>
 
             <button
@@ -466,7 +468,7 @@ export const LearningStudio: React.FC<LearningStudioProps> = ({
               } focus-visible:ring-2 focus-visible:ring-[#0F392B] focus-visible:outline-none`}
             >
               <Layers className="w-4 h-4" />
-              <span>Flashcards Mode</span>
+              <span>{t('learning.flashcardsMode', 'Flashcards Mode')}</span>
             </button>
           </div>
         </div>
@@ -502,7 +504,7 @@ export const LearningStudio: React.FC<LearningStudioProps> = ({
               {/* DATE RANGE SELECTION: 2x3 Grid matching user mockup */}
               <div>
                 <label className="block text-xs font-bold text-[#141412] mb-2">
-                  Select date range
+                  {t('learning.selectDateRange', 'Select date range')}
                 </label>
                 <div
                   role="radiogroup"
@@ -564,7 +566,7 @@ export const LearningStudio: React.FC<LearningStudioProps> = ({
               {/* CURRENT TOPIC SELECTION */}
               <div ref={topicDropdownRef} className="relative">
                 <label className="block text-xs font-bold text-[#141412] mb-2">
-                  Current topic
+                  {t('learning.currentTopic', 'Current topic')}
                 </label>
 
                 <button
@@ -673,7 +675,7 @@ export const LearningStudio: React.FC<LearningStudioProps> = ({
               {/* NUMBER OF QUESTIONS / FLASHCARDS: 4-col row matching user mockup */}
               <div>
                 <label className="block text-xs font-bold text-[#141412] mb-2">
-                  {mode === 'quiz' ? 'Number of questions' : 'Number of flashcards'}
+                  {mode === 'quiz' ? t('learning.questionCount', 'Number of questions') : t('learning.flashcards', 'Number of flashcards')}
                 </label>
                 <div
                   role="radiogroup"
@@ -717,7 +719,7 @@ export const LearningStudio: React.FC<LearningStudioProps> = ({
                     </>
                   ) : (
                     <span>
-                      {mode === 'quiz' ? 'Generate Fresh Quiz' : 'Generate Flashcards'}
+                      {mode === 'quiz' ? t('learning.generateQuiz', 'Generate Fresh Quiz') : t('learning.generateFlashcards', 'Generate Flashcards')}
                     </span>
                   )}
                 </button>

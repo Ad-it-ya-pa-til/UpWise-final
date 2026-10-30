@@ -16,6 +16,8 @@ import { NewsGlobeHub } from './components/globe/NewsGlobeHub'
 import { LearningStudio } from './components/learning/LearningStudio'
 import { RewardsModal } from './components/learning/RewardsModal'
 import { fetchBalanceApi } from './services/learningApi'
+import { loadLanguageBundle } from './i18n'
+import { SUPPORTED_LANGUAGES } from './i18n/languages'
 import { UserProfile } from './types/navigation'
 import { Article, LanguageMode, LayoutMode, DatePreset } from './types/news'
 import { MOCK_ARTICLES } from './mock/articles.mock'
@@ -360,6 +362,19 @@ export default function App() {
     }
   }
 
+  const handleLanguageChange = (newLang: LanguageMode) => {
+    setLanguage(newLang)
+    loadLanguageBundle(newLang).catch(() => {})
+    try {
+      localStorage.setItem('upwise_user_language', newLang)
+      if (user) {
+        localStorage.setItem(`upwise_user_language_${user.id}`, newLang)
+      }
+    } catch {
+      // Storage fallback
+    }
+  }
+
   const handleOnboardingComplete = (selectedTopicIds: string[], selectedLanguage: LanguageMode) => {
     setUserPreferredTopics(selectedTopicIds)
     setLanguage(selectedLanguage)
@@ -495,7 +510,7 @@ export default function App() {
           destination === 'feed' ? (
             <AdvancedFilterBar
               language={language}
-              onLanguageChange={setLanguage}
+              onLanguageChange={handleLanguageChange}
               datePreset={datePreset}
               onDatePresetChange={setDatePreset}
               customStartDate={customStartDate}
@@ -651,7 +666,7 @@ export default function App() {
 
       <Footer
         language={language}
-        onLanguageChange={setLanguage}
+        onLanguageChange={handleLanguageChange}
         onSelectCategory={handleSelectCategory}
         onNavigateHome={handleNavigateHome}
         onNavigateSaved={() => setIsSavedViewActive(true)}

@@ -67,7 +67,20 @@ export interface Article {
 }
 
 export type LayoutMode = 'stack' | 'grid'
-export type LanguageMode = 'en' | 'hi'
+export type LanguageMode =
+  | 'en'
+  | 'hi'
+  | 'pa'
+  | 'bn'
+  | 'mr'
+  | 'ta'
+  | 'te'
+  | 'gu'
+  | 'kn'
+  | 'ml'
+  | 'or'
+  | 'as'
+  | 'ur'
 export type DatePreset = 'all' | 'today' | 'yesterday' | 'week' | 'month' | 'custom'
 
 export interface NewsFilters {

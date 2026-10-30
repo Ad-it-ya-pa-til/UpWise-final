@@ -115,3 +115,52 @@
 .rotate-y-180 {
   transform: rotateY(180deg);
 }
+
+
+/* Multilingual & RTL Enhancements */
+[dir="rtl"] {
+  text-align: right;
+}
+
+/* Script-aware font fallbacks */
+:lang(ur) {
+  font-family: 'Noto Nastaliq Urdu', 'Noto Sans Arabic', 'Segoe UI Historic', system-ui, sans-serif;
+  letter-spacing: 0;
+  line-height: 1.8;
+}
+
+:lang(hi), :lang(mr) {
+  font-family: 'Noto Sans Devanagari', system-ui, sans-serif;
+}
+
+:lang(pa) {
+  font-family: 'Noto Sans Gurmukhi', system-ui, sans-serif;
+}
+
+:lang(bn), :lang(as) {
+  font-family: 'Noto Sans Bengali', system-ui, sans-serif;
+}
+
+:lang(ta) {
+  font-family: 'Noto Sans Tamil', system-ui, sans-serif;
+}
+
+:lang(te) {
+  font-family: 'Noto Sans Telugu', system-ui, sans-serif;
+}
+
+:lang(gu) {
+  font-family: 'Noto Sans Gujarati', system-ui, sans-serif;
+}
+
+:lang(kn) {
+  font-family: 'Noto Sans Kannada', system-ui, sans-serif;
+}
+
+:lang(ml) {
+  font-family: 'Noto Sans Malayalam', system-ui, sans-serif;
+}
+
+:lang(or) {
+  font-family: 'Noto Sans Oriya', system-ui, sans-serif;
+}

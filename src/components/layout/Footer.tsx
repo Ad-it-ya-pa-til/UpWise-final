@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { ArrowUp, CheckCircle, Mail, Loader2, Volume2, Shield } from 'lucide-react'
 import { SunLogo } from './SunLogo'
 import { LanguageMode } from '../../types/news'
+import { LanguageSelector } from './LanguageSelector'
+import { useTranslation } from 'react-i18next'
 import { PolicyTab } from './EditorialStandardsModal'
 
 interface FooterProps {
@@ -204,30 +206,7 @@ export const Footer: React.FC<FooterProps> = ({
                 <label className="text-[11px] font-semibold text-[#78716C] block mb-1.5">
                   Language Edition
                 </label>
-                <div className="inline-flex p-0.5 bg-white border border-[#E8E2D8] rounded text-xs font-semibold shadow-xs">
-                  <button
-                    type="button"
-                    onClick={() => onLanguageChange?.('en')}
-                    className={`px-3 py-1 rounded transition-all ${
-                      language === 'en'
-                        ? 'bg-[#141412] text-[#FAF7F2] shadow-xs'
-                        : 'text-[#78716C] hover:text-[#141412]'
-                    }`}
-                  >
-                    EN
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => onLanguageChange?.('hi')}
-                    className={`px-3 py-1 rounded transition-all ${
-                      language === 'hi'
-                        ? 'bg-[#141412] text-[#FAF7F2] shadow-xs'
-                        : 'text-[#78716C] hover:text-[#141412]'
-                    }`}
-                  >
-                    HI
-                  </button>
-                </div>
+                <LanguageSelector currentLanguage={language} onLanguageChange={(l) => onLanguageChange?.(l)} variant="footer" />
               </div>
 
               <div>

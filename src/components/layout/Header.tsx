@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Bookmark, MessageSquare, Palette, Newspaper, Plus, Sparkles } from 'lucide-react'
 import { UpwiseLogo } from './UpwiseLogo'
 import { SearchWithCategoryBrowser } from './SearchWithCategoryBrowser'
@@ -47,6 +48,8 @@ export const NEWSPAPER_SECTIONS = [
 ]
 
 export const Header: React.FC<HeaderProps> = ({
+  // hooks
+
   user,
   selectedCategoryId,
   selectedSubcategoryId,
@@ -72,6 +75,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenRewards,
   className = '',
 }) => {
+  const { t } = useTranslation()
   const currentDateFormatted = useMemo(() => {
     return new Date().toLocaleDateString('en-US', {
       month: 'long',
@@ -150,9 +154,7 @@ export const Header: React.FC<HeaderProps> = ({
                         ? 'bg-[#0F392B] text-white font-semibold'
                         : 'text-[#55504A] hover:text-[#141412]'
                       }`}
-                  >
-                    News
-                  </button>
+                  >{t('nav.news', 'News')}</button>
                   <button
                     type="button"
                     onClick={() => onSelectDestination('globe')}
@@ -161,7 +163,7 @@ export const Header: React.FC<HeaderProps> = ({
                         : 'text-[#55504A] hover:text-[#141412]'
                       }`}
                   >
-                    <span>Globe</span>
+                    <span>{t('nav.globe', 'Globe')}</span>
                   </button>
                   <button
                     type="button"
@@ -171,7 +173,7 @@ export const Header: React.FC<HeaderProps> = ({
                         : 'text-[#55504A] hover:text-[#141412]'
                       }`}
                   >
-                    <span>Community</span>
+                    <span>{t('nav.community', 'Community')}</span>
                   </button>
                   <button
                     type="button"
@@ -180,9 +182,7 @@ export const Header: React.FC<HeaderProps> = ({
                         ? 'bg-[#0F392B] text-white font-semibold'
                         : 'text-[#55504A] hover:text-[#141412]'
                       }`}
-                  >
-                    Cartoons
-                  </button>
+                  >{t('nav.cartoons', 'Cartoons')}</button>
                   <button
                     type="button"
                     onClick={() => onSelectDestination('quiz')}
@@ -191,7 +191,7 @@ export const Header: React.FC<HeaderProps> = ({
                         : 'text-[#55504A] hover:text-[#141412]'
                       }`}
                   >
-                    Quiz & Cards
+                    {t('nav.quizAndCards', 'Quiz & Cards')}
                   </button>
                 </div>
               )}
@@ -209,7 +209,7 @@ export const Header: React.FC<HeaderProps> = ({
                     }`}
                 >
                   <Bookmark className={`w-3.5 h-3.5 stroke-[1.75] ${isSavedViewActive ? 'fill-current' : ''}`} />
-                  <span className="hidden sm:inline">Saved</span>
+                  <span className="hidden sm:inline">{t('nav.saved', 'Saved')}</span>
                   {savedCount > 0 && (
                     <span className="px-1.5 py-0.2 bg-[#D95D39] text-white font-sans text-[10px] font-bold rounded-full min-w-4 text-center leading-4">
                       {savedCount}

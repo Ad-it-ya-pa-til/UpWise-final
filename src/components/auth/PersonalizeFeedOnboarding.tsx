@@ -16,6 +16,7 @@ import {
 } from 'lucide-react'
 import { UpwiseLogo } from '../layout/UpwiseLogo'
 import { LanguageMode } from '../../types/news'
+import { LanguageSelector } from '../layout/LanguageSelector'
 import { syncPreferencesApi } from '../../services/api'
 
 export interface TopicDeskItem {
@@ -183,28 +184,7 @@ export const PersonalizeFeedOnboarding: React.FC<PersonalizeFeedOnboardingProps>
               <Languages className="w-3.5 h-3.5 text-[#0F392B]" />
               Edition:
             </span>
-            <button
-              type="button"
-              onClick={() => setSelectedLanguage('en')}
-              className={`px-3 py-1 text-xs font-semibold rounded-md transition-all ${
-                selectedLanguage === 'en'
-                  ? 'bg-[#0F392B] text-white shadow-xs'
-                  : 'text-[#55504A] hover:text-[#141412]'
-              }`}
-            >
-              English
-            </button>
-            <button
-              type="button"
-              onClick={() => setSelectedLanguage('hi')}
-              className={`px-3 py-1 text-xs font-semibold rounded-md transition-all ${
-                selectedLanguage === 'hi'
-                  ? 'bg-[#0F392B] text-white shadow-xs'
-                  : 'text-[#55504A] hover:text-[#141412]'
-              }`}
-            >
-              हिंदी (Hindi)
-            </button>
+            <LanguageSelector currentLanguage={selectedLanguage} onLanguageChange={setSelectedLanguage} />
           </div>
 
           <div className="mt-4 flex items-center justify-center gap-3 text-xs text-[#78716C]">

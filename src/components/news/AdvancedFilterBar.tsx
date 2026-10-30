@@ -11,6 +11,8 @@ import {
   RotateCcw,
 } from 'lucide-react'
 import { LanguageMode, LayoutMode, DatePreset } from '../../types/news'
+import { LanguageSelector } from '../layout/LanguageSelector'
+import { useTranslation } from 'react-i18next'
 
 interface AdvancedFilterBarProps {
   language: LanguageMode
@@ -38,6 +40,7 @@ interface AdvancedFilterBarProps {
 }
 
 export const AdvancedFilterBar: React.FC<AdvancedFilterBarProps> = ({
+
   language,
   onLanguageChange,
   datePreset,
@@ -147,30 +150,7 @@ export const AdvancedFilterBar: React.FC<AdvancedFilterBarProps> = ({
           {/* Left: Compact Filters */}
           <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
             {/* Language Switcher */}
-            <div className="inline-flex p-0.5 bg-white border border-[#E8E2D8] rounded text-[11px] font-medium">
-              <button
-                type="button"
-                onClick={() => onLanguageChange('en')}
-                className={`px-2 py-0.5 rounded transition-all ${
-                  language === 'en'
-                    ? 'bg-[#141412] text-[#FAF7F2] font-semibold'
-                    : 'text-[#78716C] hover:text-[#141412]'
-                }`}
-              >
-                EN
-              </button>
-              <button
-                type="button"
-                onClick={() => onLanguageChange('hi')}
-                className={`px-2 py-0.5 rounded transition-all ${
-                  language === 'hi'
-                    ? 'bg-[#141412] text-[#FAF7F2] font-semibold'
-                    : 'text-[#78716C] hover:text-[#141412]'
-                }`}
-              >
-                HI
-              </button>
-            </div>
+            <LanguageSelector currentLanguage={language} onLanguageChange={onLanguageChange} />
 
             {/* Date Filter */}
             <div ref={dateRef} className="relative">

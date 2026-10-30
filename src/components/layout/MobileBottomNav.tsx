@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { Newspaper, Globe, MessageSquare, Palette, GraduationCap } from 'lucide-react'
 import { NavDestination } from './NavigationRail'
 
@@ -13,30 +14,31 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
   onSelectDestination,
   className = '',
 }) => {
+  const { t } = useTranslation()
   const destinations = [
     {
       id: 'feed' as NavDestination,
-      label: 'News',
+      label: t('nav.news', 'News'),
       icon: Newspaper,
     },
     {
       id: 'globe' as NavDestination,
-      label: 'Globe',
+      label: t('nav.globe', 'Globe'),
       icon: Globe,
     },
     {
       id: 'community' as NavDestination,
-      label: 'Community',
+      label: t('nav.community', 'Community'),
       icon: MessageSquare,
     },
     {
       id: 'comics' as NavDestination,
-      label: 'Comics',
+      label: t('nav.cartoons', 'Comics'),
       icon: Palette,
     },
     {
       id: 'quiz' as NavDestination,
-      label: 'Quiz',
+      label: t('nav.quizAndCards', 'Quiz'),
       icon: GraduationCap,
     },
   ]
