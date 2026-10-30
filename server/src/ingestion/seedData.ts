@@ -11,6 +11,12 @@ export interface SeedArticle {
   readingTime: number;
   trending: boolean;
   language?: 'en' | 'hi';
+  latitude?: number;
+  longitude?: number;
+  location?: string;
+  city?: string;
+  state?: string;
+  country?: string;
 }
 
 const now = new Date();

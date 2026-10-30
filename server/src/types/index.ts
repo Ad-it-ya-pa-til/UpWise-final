@@ -31,6 +31,12 @@ export interface ArticleItem {
   trending: boolean;
   viewCount: number;
   language?: string;
+  latitude?: number | null;
+  longitude?: number | null;
+  location?: string | null;
+  city?: string | null;
+  state?: string | null;
+  country?: string | null;
   createdAt: string | Date;
   updatedAt: string | Date;
   clusters?: {
@@ -64,6 +70,19 @@ export interface FeedQueryParams {
   page?: number;
   limit?: number;
   trendingOnly?: boolean;
+}
+
+export interface MapQueryParams {
+  bbox?: string; // minLng,minLat,maxLng,maxLat
+  location?: string;
+  q?: string;
+  category?: string;
+  language?: 'en' | 'hi' | 'all';
+  dateRange?: 'today' | 'yesterday' | '7d' | '30d' | 'custom';
+  startDate?: string;
+  endDate?: string;
+  sort?: 'latest' | 'oldest' | 'relevant';
+  limit?: number;
 }
 
 export interface PaginatedResponse<T> {

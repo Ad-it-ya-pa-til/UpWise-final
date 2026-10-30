@@ -10,6 +10,7 @@ import {
   loginApi,
   registerApi,
   fetchArticlesByLocation,
+  fetchMapArticles,
   mapBackendArticleToFrontend,
   checkClaimEvidenceApi,
 } from '../services/api.js'
@@ -268,4 +269,51 @@ test('Evidence Lens: Evaluates claims without fabricating external sources when 
   assert.ok(result.sources.length > 0)
   assert.ok(result.sources[0].title.includes('The Hindu'))
   assert.ok(result.aiInterpretation.includes('No external sources were fabricated'))
+})
+
+test('Satellite Map Service: fetchMapArticles returns articles with verified real coordinates', async () => {
+  const res = await fetchMapArticles({})
+  assert.ok(res.articles.length > 0, 'Returns articles for map display')
+  res.articles.forEach((a) => {
+    assert.ok(a.location, 'Article has location object')
+    assert.ok(Array.isArray(a.location?.coordinates), 'Article has coordinates array')
+    assert.equal(a.location?.coordinates?.length, 2, 'Coordinates has [lat, lng]')
+    const [lat, lng] = a.location!.coordinates!
+    assert.ok(!isNaN(lat) && !isNaN(lng), 'Coordinates are valid numbers')
+  })
+})
+
+test('Satellite Map Service: Bounding box filtering works accurately', async () => {
+  const indiaRes = await fetchMapArticles({
+    bbox: [68, 6, 97, 37],
+  })
+  assert.ok(indiaRes.articles.length > 0, 'Finds articles inside India bounding box')
+  indiaRes.articles.forEach((a) => {
+    const [lat, lng] = a.location!.coordinates!
+    assert.ok(lat >= 6 && lat <= 37 && lng >= 68 && lng <= 97, 'Article coordinates inside India bbox')
+  })
+})
+
+test('Satellite Map Service: Combined Topic + Location search queries', async () => {
+  const aiRes = await fetchMapArticles({ q: 'AI in Bengaluru' })
+  assert.ok(aiRes.articles.length > 0, 'Finds AI news in Bengaluru')
+  assert.ok(aiRes.articles.some((a) => a.location?.city === 'Bengaluru'))
+
+  const punjabRes = await fetchMapArticles({ q: 'Elections in Punjab' })
+  assert.ok(punjabRes.articles.length > 0, 'Finds dispatches related to Punjab')
+
+  const cricketRes = await fetchMapArticles({ q: 'Cricket in Mumbai' })
+  assert.ok(cricketRes.articles.length > 0, 'Finds news related to Mumbai')
+})
+
+test('Satellite Map Service: Filters work cohesively together', async () => {
+  const filtered = await fetchMapArticles({
+    locationId: 'punjab',
+    category: 'tech-science',
+    language: 'all',
+  })
+  assert.ok(Array.isArray(filtered.articles))
+  filtered.articles.forEach((a) => {
+    assert.equal(a.categoryId, 'tech-science', 'Category filter applies')
+  })
 })
